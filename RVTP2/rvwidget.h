@@ -1,0 +1,59 @@
+#ifndef RVWIDGET_H
+#define RVWIDGET_H
+
+#include "rvcamera.h"
+#include "rvbody.h"
+#include "rvpyramid.h"
+
+#include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QOpenGLBuffer>
+#include <QOpenGLShaderProgram>
+#include <QVector3D>
+#include <QTimer>
+#include <QMouseEvent>
+
+class RVWidget : public QOpenGLWidget, protected QOpenGLFunctions
+{
+    Q_OBJECT
+
+public:
+    RVWidget(QWidget *parent = nullptr);
+    ~RVWidget() override;
+
+    void initializeGL() override;
+    void paintGL() override;
+    void resizeGL(int w, int h) override;
+
+protected:
+    void initializeBuffer();
+    void initializeShaders();
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+
+protected:
+    QOpenGLBuffer m_vbo;
+    QOpenGLBuffer m_ibo;
+    QOpenGLShaderProgram m_program;
+    float m_angleY;
+    float m_angleX;
+    QPoint m_oldPos;
+    QTimer* m_timer;
+    boolean m_rotate;
+    int m_angleProj;
+    float m_aspetcRatio;
+    RVCamera *m_camera;         //!<    Pointeur sur la caméra à utiliser lors du rendu
+    RVBody   *m_body;           //!<    Pointeur sur l'objet 3D montré dans le widget
+    float m_angularVelocityX;   //!<    Vitesse angulaire autour de l'axe x
+    float m_angularVelocityY;   //!<    Vitesse angulaire autour de l'axe y
+    float m_angularVelocityZ;   //!<    Vitesse angulaire autour de l'axe z
+    bool m_animation;           //!<    Booléen qui dit si l'animation est activée ou pas
+
+private slots:
+    void update();
+
+protected slots:
+    void startAnimation();
+    void changeFov(int angle);
+};
+#endif // RVWIDGET_H
