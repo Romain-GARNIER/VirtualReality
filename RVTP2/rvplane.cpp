@@ -3,7 +3,7 @@
 RVPlane::RVPlane()
     : RVBody()
 {
-    //m_FSFileName = ":/shaders/FS_plan.fsh";
+    m_FSFileName = ":/shaders/FS_plan.fsh";
     m_longX = 10;
     m_largZ = 10;
     m_globalColor = QVector3D(0,1,0);

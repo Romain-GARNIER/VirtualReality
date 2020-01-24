@@ -8,7 +8,7 @@ RVCamera::RVCamera()
     m_fov  = 40;
     m_aspect = 1.33f;
     m_zMax = 100;
-    m_zMin  = 0.01f;
+    m_zMin  = 5;
 }
 
 QMatrix4x4 RVCamera::viewMatrix()
