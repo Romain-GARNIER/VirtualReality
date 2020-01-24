@@ -1,17 +1,18 @@
-#ifndef RVPYRAMID_H
-#define RVPYRAMID_H
+#ifndef RVCUBE_H
+#define RVCUBE_H
 
 #include "rvbody.h"
 
-class RVPyramid : public RVBody
+class RVCube : public RVBody
 {
 public:
-    RVPyramid();
+    RVCube();
     void draw() override;
 
 protected:
     void initializeBuffer() override;
     void initializeVAO();
+    QMatrix4x4 modelMatrix() override;
 };
 
-#endif // RVPYRAMID_H
+#endif // RVCUBE_H

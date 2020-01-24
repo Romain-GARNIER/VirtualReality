@@ -20,6 +20,8 @@ SOURCES += \
     mainwindow.cpp \
     rvbody.cpp \
     rvcamera.cpp \
+    rvcube.cpp \
+    rvplane.cpp \
     rvpyramid.cpp \
     rvwidget.cpp
 
@@ -27,6 +29,8 @@ HEADERS += \
     mainwindow.h \
     rvbody.h \
     rvcamera.h \
+    rvcube.h \
+    rvplane.h \
     rvpyramid.h \
     rvwidget.h
 
@@ -37,8 +41,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 windows:LIBS += -lopengl32
 
 DISTFILES += \
+    FS_plan.fsh \
     FS_simple.fsh \
-    VS_simple.vsh
+    VS_simple.vsh \
+    VS_simpler.vsh
 
 RESOURCES += \
     RVResources.qrc

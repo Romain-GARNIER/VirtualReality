@@ -22,7 +22,7 @@ public:
     void initialize();
     void initializeShader();
     virtual void initializeBuffer() = 0;
-    virtual void initializeVAO() = 0;
+    virtual void initializeVAO();
     void translate(QVector3D position);
     QQuaternion orientation() const;
     void rotate(float angle, QVector3D axis);
@@ -66,6 +66,21 @@ public:
     QVector3D position() const;
     void setPosition(const QVector3D &position);
 
+    float opacity() const;
+    void setOpacity(float opacity);
+
+    bool wireframe() const;
+    void setWireframe(bool wireframe);
+
+    bool culling() const;
+    void setCulling(bool culling);
+
+    float scale() const;
+    void setScale(float scale);
+
+    QVector3D globalColor() const;
+    void setGlobalColor(const QVector3D &globalColor);
+
 protected:
     QString m_VSFileName;               //! : nom du fichier qui contient le vertex shader
     QString m_FSFileName;               //! : nom du fichier qui contient le fragment shader
@@ -82,6 +97,14 @@ protected:
     int m_numIndices;                   //! : nombre d'index (0 si on n'utilise pas l'ibo)
 
     RVCamera *m_camera;                 //! : pointeur sur la caméra utilisée pour le rendu.
+
+    float m_opacity;
+    bool m_wireframe;
+    bool m_culling;
+
+    float m_scale;
+
+    QVector3D m_globalColor;
 };
 
 #endif // RVBODY_H

@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.setWindowTitle("Réalité Virtuelle: Tuto1.2");
+    w.setWindowTitle("Réalité Virtuelle: TP n°2");
     w.show();
     return a.exec();
 }

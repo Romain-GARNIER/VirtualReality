@@ -39,11 +39,12 @@ protected:
     float m_angleX;
     QPoint m_oldPos;
     QTimer* m_timer;
-    boolean m_rotate;
+    bool m_rotate;
     int m_angleProj;
     float m_aspetcRatio;
     RVCamera *m_camera;         //!<    Pointeur sur la caméra à utiliser lors du rendu
     RVBody   *m_body;           //!<    Pointeur sur l'objet 3D montré dans le widget
+    RVBody   *m_plan;           //!<    Pointeur sur l'objet 3D montré dans le widget
     float m_angularVelocityX;   //!<    Vitesse angulaire autour de l'axe x
     float m_angularVelocityY;   //!<    Vitesse angulaire autour de l'axe y
     float m_angularVelocityZ;   //!<    Vitesse angulaire autour de l'axe z
@@ -55,5 +56,10 @@ private slots:
 protected slots:
     void startAnimation();
     void changeFov(int angle);
+    void changeOpacity(int opacity);
+    void changeWireframe(int);
+    void changeCulling(int);
+    void changeScale(int);
+    void changeSaturation(int g);
 };
 #endif // RVWIDGET_H

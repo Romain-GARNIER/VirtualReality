@@ -1,4 +1,7 @@
 #include "rvwidget.h"
+#include "rvcube.h"
+#include "rvplane.h"
+
 #include <QMessageBox>
 
 RVWidget::RVWidget(QWidget *parent)
@@ -16,6 +19,7 @@ RVWidget::~RVWidget()
     delete m_timer;
     delete m_camera;
     delete m_body;
+    delete m_plan;
 }
 
 void RVWidget::initializeGL()
@@ -29,10 +33,19 @@ void RVWidget::initializeGL()
     //glDisable(GL_CULL_FACE);
 
     m_camera = new RVCamera();
-    m_body = new RVPyramid();
+    m_body = new RVCube();
+    m_plan = new RVPlane();
+
+    m_camera->setPosition(QVector3D(0, 7, 4));
+    m_camera->setTarget(QVector3D(0, 0, 0));
+
     m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D(0, -0.5f, -4));
+    m_body->setPosition(QVector3D(0, 0, 0));
     m_body->initialize();
+
+    m_plan->setCamera(m_camera);
+    m_plan->setPosition(QVector3D(0, 0, 0));
+    m_plan->initialize();
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
 
@@ -43,7 +56,17 @@ void RVWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+//    for(int i=0;i<10;i++){
+//        RVBody *body = new RVCube();
+//        body->setCamera(m_camera);
+//        body->setPosition(QVector3D(i*2, 0, 0));
+//        body->initialize();
+//        body->draw();
+//    }
+
     m_body->draw();
+    m_plan->draw();
+
 }
 
 void RVWidget::update(){
@@ -95,5 +118,33 @@ void RVWidget::startAnimation(){
 
 void RVWidget::changeFov(int newFov){
     m_camera->setFov(newFov);
+    this->update();
+}
+
+
+void RVWidget::changeOpacity(int opacity){
+//    m_body->setOpacity(opacity*0.01f);
+    m_plan->setOpacity(opacity*0.01f);
+    this->update();
+}
+
+void RVWidget::changeWireframe(int wireframe){
+    m_body->setWireframe(wireframe);
+    this->update();
+}
+
+void RVWidget::changeCulling(int culling){
+    m_body->setCulling(culling);
+    this->update();
+}
+
+void RVWidget::changeScale(int scale){
+    m_plan->setScale(scale*0.1f);
+    this->update();
+}
+
+void RVWidget::changeSaturation(int g){
+    float color = g*0.01f;
+    m_body->setGlobalColor(QVector3D(color,color,color));
     this->update();
 }

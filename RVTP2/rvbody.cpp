@@ -21,8 +21,16 @@ RVBody::RVBody()
     m_numTriangles = 0;
     m_numIndices = 0;
 
-    m_VSFileName = "NO VS FILE";
-    m_FSFileName = "NO FS FILE";
+    m_VSFileName = ":/shaders/VS_simpler.vsh";
+    m_FSFileName = ":/shaders/FS_simple.fsh";
+
+    m_opacity = 1;
+    m_wireframe = false;
+    m_culling  = true;
+
+    m_scale = 1;
+
+    m_globalColor = QVector3D(1, 1, 1);
 }
 
 void RVBody::initialize()
@@ -70,6 +78,23 @@ void RVBody::initializeShader()
     }
 
     //Libération
+    m_program.release();
+}
+
+void RVBody::initializeVAO()
+{
+    //Initialisation du VAO
+    m_vao.create();
+    m_vao.bind();
+    m_vbo.bind();
+    m_ibo.bind();
+
+    //Définition du seul attribut position (la couleur est uniforme avec le VS_simpler)
+    m_program.setAttributeBuffer("rv_Position", GL_FLOAT, 0, 3);
+    m_program.enableAttributeArray("rv_Position");
+
+    //Libération
+    m_vao.release();
     m_program.release();
 }
 
@@ -179,6 +204,56 @@ void RVBody::setPosition(const QVector3D &position)
     m_position = position;
 }
 
+float RVBody::opacity() const
+{
+    return m_opacity;
+}
+
+void RVBody::setOpacity(float opacity)
+{
+    m_opacity = opacity;
+}
+
+bool RVBody::wireframe() const
+{
+    return m_wireframe;
+}
+
+void RVBody::setWireframe(bool wireframe)
+{
+    m_wireframe = wireframe;
+}
+
+bool RVBody::culling() const
+{
+    return m_culling;
+}
+
+void RVBody::setCulling(bool culling)
+{
+    m_culling = culling;
+}
+
+float RVBody::scale() const
+{
+    return m_scale;
+}
+
+void RVBody::setScale(float scale)
+{
+    m_scale = scale;
+}
+
+QVector3D RVBody::globalColor() const
+{
+    return m_globalColor;
+}
+
+void RVBody::setGlobalColor(const QVector3D &globalColor)
+{
+    m_globalColor = globalColor;
+}
+
 QQuaternion RVBody::orientation() const
 {
     return m_orientation;
@@ -194,6 +269,7 @@ QMatrix4x4 RVBody::modelMatrix()
     QMatrix4x4 model;
     model.translate(m_position);
     model.rotate(m_orientation);
+    model.scale(m_scale);
     return model;
 }
 
