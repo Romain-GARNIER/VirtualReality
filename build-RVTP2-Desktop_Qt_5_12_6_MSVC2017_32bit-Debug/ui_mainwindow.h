@@ -11,11 +11,15 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDial>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
@@ -34,9 +38,17 @@ public:
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton;
     QDial *dial;
+    QRadioButton *radioButton;
+    QRadioButton *radioButton_2;
+    QSlider *horizontalSlider;
+    QCheckBox *checkBox;
+    QCheckBox *checkBox_2;
+    QSlider *horizontalSlider_2;
+    QSlider *horizontalSlider_3;
     QSpacerItem *verticalSpacer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -82,6 +94,67 @@ public:
 
         verticalLayout->addWidget(dial);
 
+        radioButton = new QRadioButton(centralwidget);
+        buttonGroup = new QButtonGroup(MainWindow);
+        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
+        buttonGroup->addButton(radioButton);
+        radioButton->setObjectName(QString::fromUtf8("radioButton"));
+
+        verticalLayout->addWidget(radioButton);
+
+        radioButton_2 = new QRadioButton(centralwidget);
+        buttonGroup->addButton(radioButton_2);
+        radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
+        radioButton_2->setChecked(true);
+
+        verticalLayout->addWidget(radioButton_2);
+
+        horizontalSlider = new QSlider(centralwidget);
+        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
+        horizontalSlider->setSizePolicy(sizePolicy2);
+        horizontalSlider->setMaximum(100);
+        horizontalSlider->setValue(100);
+        horizontalSlider->setOrientation(Qt::Horizontal);
+
+        verticalLayout->addWidget(horizontalSlider);
+
+        checkBox = new QCheckBox(centralwidget);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+
+        verticalLayout->addWidget(checkBox);
+
+        checkBox_2 = new QCheckBox(centralwidget);
+        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+        checkBox_2->setChecked(true);
+
+        verticalLayout->addWidget(checkBox_2);
+
+        horizontalSlider_2 = new QSlider(centralwidget);
+        horizontalSlider_2->setObjectName(QString::fromUtf8("horizontalSlider_2"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_2->sizePolicy().hasHeightForWidth());
+        horizontalSlider_2->setSizePolicy(sizePolicy2);
+        horizontalSlider_2->setMinimum(0);
+        horizontalSlider_2->setMaximum(50);
+        horizontalSlider_2->setValue(10);
+        horizontalSlider_2->setOrientation(Qt::Horizontal);
+
+        verticalLayout->addWidget(horizontalSlider_2);
+
+        horizontalSlider_3 = new QSlider(centralwidget);
+        horizontalSlider_3->setObjectName(QString::fromUtf8("horizontalSlider_3"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_3->sizePolicy().hasHeightForWidth());
+        horizontalSlider_3->setSizePolicy(sizePolicy2);
+        horizontalSlider_3->setMaximum(100);
+        horizontalSlider_3->setSingleStep(1);
+        horizontalSlider_3->setValue(100);
+        horizontalSlider_3->setOrientation(Qt::Horizontal);
+
+        verticalLayout->addWidget(horizontalSlider_3);
+
         verticalSpacer = new QSpacerItem(20, 318, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
@@ -104,6 +177,13 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(pushButton, SIGNAL(clicked()), widgetRV, SLOT(startAnimation()));
         QObject::connect(dial, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeFov(int)));
+        QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeOpacity(int)));
+        QObject::connect(checkBox, SIGNAL(stateChanged(int)), widgetRV, SLOT(changeWireframe(int)));
+        QObject::connect(checkBox_2, SIGNAL(stateChanged(int)), widgetRV, SLOT(changeCulling(int)));
+        QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeScale(int)));
+        QObject::connect(horizontalSlider_3, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeSaturation(int)));
+        QObject::connect(radioButton, SIGNAL(clicked(bool)), widgetRV, SLOT(setOrthogonale(bool)));
+        QObject::connect(radioButton, SIGNAL(toggled(bool)), widgetRV, SLOT(setOrthogonale(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -112,6 +192,10 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "Animation", nullptr));
+        radioButton->setText(QApplication::translate("MainWindow", "Orthogonale", nullptr));
+        radioButton_2->setText(QApplication::translate("MainWindow", "Perspective", nullptr));
+        checkBox->setText(QApplication::translate("MainWindow", "mode filaire", nullptr));
+        checkBox_2->setText(QApplication::translate("MainWindow", "culling", nullptr));
     } // retranslateUi
 
 };

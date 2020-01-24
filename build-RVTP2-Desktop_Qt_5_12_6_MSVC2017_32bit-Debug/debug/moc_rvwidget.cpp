@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_RVWidget_t {
-    QByteArrayData data[6];
-    char stringdata0[48];
+    QByteArrayData data[15];
+    char stringdata0[152];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,11 +36,23 @@ QT_MOC_LITERAL(1, 9, 6), // "update"
 QT_MOC_LITERAL(2, 16, 0), // ""
 QT_MOC_LITERAL(3, 17, 14), // "startAnimation"
 QT_MOC_LITERAL(4, 32, 9), // "changeFov"
-QT_MOC_LITERAL(5, 42, 5) // "angle"
+QT_MOC_LITERAL(5, 42, 5), // "angle"
+QT_MOC_LITERAL(6, 48, 13), // "changeOpacity"
+QT_MOC_LITERAL(7, 62, 7), // "opacity"
+QT_MOC_LITERAL(8, 70, 15), // "changeWireframe"
+QT_MOC_LITERAL(9, 86, 13), // "changeCulling"
+QT_MOC_LITERAL(10, 100, 11), // "changeScale"
+QT_MOC_LITERAL(11, 112, 16), // "changeSaturation"
+QT_MOC_LITERAL(12, 129, 1), // "g"
+QT_MOC_LITERAL(13, 131, 14), // "setOrthogonale"
+QT_MOC_LITERAL(14, 146, 5) // "ortho"
 
     },
     "RVWidget\0update\0\0startAnimation\0"
-    "changeFov\0angle"
+    "changeFov\0angle\0changeOpacity\0opacity\0"
+    "changeWireframe\0changeCulling\0changeScale\0"
+    "changeSaturation\0g\0setOrthogonale\0"
+    "ortho"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,7 +62,7 @@ static const uint qt_meta_data_RVWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -58,14 +70,26 @@ static const uint qt_meta_data_RVWidget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x08 /* Private */,
-       3,    0,   30,    2, 0x09 /* Protected */,
-       4,    1,   31,    2, 0x09 /* Protected */,
+       1,    0,   59,    2, 0x08 /* Private */,
+       3,    0,   60,    2, 0x09 /* Protected */,
+       4,    1,   61,    2, 0x09 /* Protected */,
+       6,    1,   64,    2, 0x09 /* Protected */,
+       8,    1,   67,    2, 0x09 /* Protected */,
+       9,    1,   70,    2, 0x09 /* Protected */,
+      10,    1,   73,    2, 0x09 /* Protected */,
+      11,    1,   76,    2, 0x09 /* Protected */,
+      13,    1,   79,    2, 0x09 /* Protected */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,    7,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::Bool,   14,
 
        0        // eod
 };
@@ -79,6 +103,12 @@ void RVWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: _t->update(); break;
         case 1: _t->startAnimation(); break;
         case 2: _t->changeFov((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->changeOpacity((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->changeWireframe((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->changeCulling((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->changeScale((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->changeSaturation((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->setOrthogonale((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -115,13 +145,13 @@ int RVWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 9;
     }
     return _id;
 }

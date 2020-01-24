@@ -28,12 +28,7 @@ RVWidget::~RVWidget()
 void RVWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-//    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
     glClearColor(0.0f, 0.566f, 0.867f, 1.0f);
-
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    //glDisable(GL_CULL_FACE);
 
     m_camera = new RVCamera();
     m_body = new RVCube();
@@ -42,11 +37,8 @@ void RVWidget::initializeGL()
     m_camera->setPosition(QVector3D(0, 7, 4));
     m_camera->setTarget(QVector3D(0, 0, 0));
 
-//    m_body->setCamera(m_camera);
-//    m_body->setPosition(QVector3D(0, 0, 0));
-//    m_body->initialize();
-
     m_body->setCamera(m_camera);
+    m_body->initialize();
 
     m_plan->setCamera(m_camera);
     m_plan->setPosition(QVector3D(0, 0, 0));
@@ -61,12 +53,11 @@ void RVWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for(int i=0;i<1;i++){
-//        for(int j=-10;j<10;j+2){
-            m_body->setPosition(QVector3D(0, 0, i));
-            m_body->initialize();
+    for(int i=-10;i<10;i+=2){
+        for(int j=-10;j<10;j+=2){
+            m_body->setPosition(QVector3D(i, 0, j));
             m_body->draw();
-//        }
+        }
     }
 
 //    m_body->draw();
@@ -173,8 +164,13 @@ void RVWidget::keyPressEvent(QKeyEvent *event){
     }
     if(event->key() == Qt::Key_Right){
         QVector3D vector = m_camera->position();
-        vector.setY(vector.y()+1.0f);
+        vector.setX(vector.x()+1.0f);
         m_camera->setPosition(vector);
     }
+    this->update();
+}
+
+void RVWidget::setOrthogonale(bool ortho){
+    m_camera->setIsOrthogonal(ortho);
     this->update();
 }

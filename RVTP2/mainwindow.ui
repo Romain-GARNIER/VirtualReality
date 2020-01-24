@@ -68,6 +68,29 @@
          </widget>
         </item>
         <item>
+         <widget class="QRadioButton" name="radioButton">
+          <property name="text">
+           <string>Orthogonale</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_2">
+          <property name="text">
+           <string>Perspective</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
          <widget class="QSlider" name="horizontalSlider">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -172,7 +195,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -191,6 +214,7 @@
     <slot>changeCulling(int)</slot>
     <slot>changeScale(int)</slot>
     <slot>changeSaturation(int)</slot>
+    <slot>setOrthogonale(bool)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -220,7 +244,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>788</x>
-     <y>136</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
@@ -236,7 +260,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>788</x>
-     <y>164</y>
+     <y>200</y>
     </hint>
     <hint type="destinationlabel">
      <x>582</x>
@@ -252,7 +276,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>788</x>
-     <y>188</y>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>563</x>
@@ -268,7 +292,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>788</x>
-     <y>212</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>644</x>
@@ -283,8 +307,8 @@
    <slot>changeScale(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>721</x>
-     <y>239</y>
+     <x>788</x>
+     <y>280</y>
     </hint>
     <hint type="destinationlabel">
      <x>605</x>
@@ -299,8 +323,8 @@
    <slot>changeSaturation(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>717</x>
-     <y>258</y>
+     <x>788</x>
+     <y>308</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
@@ -308,5 +332,40 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>widgetRV</receiver>
+   <slot>setOrthogonale(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>714</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>673</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widgetRV</receiver>
+   <slot>setOrthogonale(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>739</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>509</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

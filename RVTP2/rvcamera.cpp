@@ -22,7 +22,17 @@ QMatrix4x4 RVCamera::viewMatrix()
 QMatrix4x4 RVCamera::projectionMatrix()
 {
     QMatrix4x4 proj;
-    proj.perspective(m_fov, m_aspect, m_zMin, m_zMax);
+    if(!m_isOrthogonal)
+        proj.perspective(m_fov, m_aspect, m_zMin, m_zMax);
+    else{
+        float nearPlane = m_zMin;
+        float farPlane = m_zMax;
+        int bottom = -m_fov/2;
+        int top = m_fov/2;
+        int left = bottom*m_aspect;
+        int right = top*m_aspect;
+        proj.ortho(left,right,bottom,top,nearPlane,farPlane);
+    }
     return proj;
 }
 

@@ -63,5 +63,6 @@ protected slots:
     void changeCulling(int);
     void changeScale(int);
     void changeSaturation(int g);
+    void setOrthogonale(bool ortho);
 };
 #endif // RVWIDGET_H
