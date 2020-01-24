@@ -12,6 +12,7 @@
 #include <QVector3D>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QKeyEvent>
 
 class RVWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -30,6 +31,7 @@ protected:
     void initializeShaders();
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 protected:
     QOpenGLBuffer m_vbo;

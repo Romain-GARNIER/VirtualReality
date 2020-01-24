@@ -9,6 +9,7 @@ RVCamera::RVCamera()
     m_aspect = 1.33f;
     m_zMax = 100;
     m_zMin  = 5;
+    m_isOrthogonal = false;
 }
 
 QMatrix4x4 RVCamera::viewMatrix()
@@ -74,6 +75,16 @@ float RVCamera::zMax() const
 void RVCamera::setZMax(float zMax)
 {
     m_zMax = zMax;
+}
+
+bool RVCamera::isOrthogonal() const
+{
+    return m_isOrthogonal;
+}
+
+void RVCamera::setIsOrthogonal(bool isOrthogonal)
+{
+    m_isOrthogonal = isOrthogonal;
 }
 
 float RVCamera::fov() const

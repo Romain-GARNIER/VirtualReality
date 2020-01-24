@@ -67,7 +67,6 @@ void RVCube::initializeBuffer()
 
 void RVCube::initializeVAO()
 {
-    //Initialisation du VA
     m_vao.bind();
     m_vbo.bind();
 

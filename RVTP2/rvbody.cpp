@@ -83,8 +83,6 @@ void RVBody::initializeShader()
 
 void RVBody::initializeVAO()
 {
-    //Initialisation du VAO
-    m_vao.create();
     m_vao.bind();
     m_vbo.bind();
     m_ibo.bind();

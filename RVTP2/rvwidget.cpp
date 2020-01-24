@@ -3,6 +3,7 @@
 #include "rvplane.h"
 
 #include <QMessageBox>
+#include <QKeyEvent>
 
 RVWidget::RVWidget(QWidget *parent)
     : QOpenGLWidget(parent), QOpenGLFunctions()
@@ -12,6 +13,8 @@ RVWidget::RVWidget(QWidget *parent)
     m_angularVelocityZ = 0;
     m_timer = new QTimer(this);
     m_animation = false;
+
+    grabKeyboard();
 }
 
 RVWidget::~RVWidget()
@@ -39,9 +42,11 @@ void RVWidget::initializeGL()
     m_camera->setPosition(QVector3D(0, 7, 4));
     m_camera->setTarget(QVector3D(0, 0, 0));
 
+//    m_body->setCamera(m_camera);
+//    m_body->setPosition(QVector3D(0, 0, 0));
+//    m_body->initialize();
+
     m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D(0, 0, 0));
-    m_body->initialize();
 
     m_plan->setCamera(m_camera);
     m_plan->setPosition(QVector3D(0, 0, 0));
@@ -56,15 +61,15 @@ void RVWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//    for(int i=0;i<10;i++){
-//        RVBody *body = new RVCube();
-//        body->setCamera(m_camera);
-//        body->setPosition(QVector3D(i*2, 0, 0));
-//        body->initialize();
-//        body->draw();
-//    }
+    for(int i=0;i<1;i++){
+//        for(int j=-10;j<10;j+2){
+            m_body->setPosition(QVector3D(0, 0, i));
+            m_body->initialize();
+            m_body->draw();
+//        }
+    }
 
-    m_body->draw();
+//    m_body->draw();
     m_plan->draw();
 
 }
@@ -146,5 +151,30 @@ void RVWidget::changeScale(int scale){
 void RVWidget::changeSaturation(int g){
     float color = g*0.01f;
     m_body->setGlobalColor(QVector3D(color,color,color));
+    this->update();
+}
+
+void RVWidget::keyPressEvent(QKeyEvent *event){
+
+    if(event->key() == Qt::Key_Down){
+        QVector3D vector = m_camera->position();
+        vector.setY(vector.y()-1.0f);
+        m_camera->setPosition(vector);
+    }
+    if(event->key() == Qt::Key_Up){
+        QVector3D vector = m_camera->position();
+        vector.setY(vector.y()+1.0f);
+        m_camera->setPosition(vector);
+    }
+    if(event->key() == Qt::Key_Left){
+        QVector3D vector = m_camera->position();
+        vector.setX(vector.x()-1.0f);
+        m_camera->setPosition(vector);
+    }
+    if(event->key() == Qt::Key_Right){
+        QVector3D vector = m_camera->position();
+        vector.setY(vector.y()+1.0f);
+        m_camera->setPosition(vector);
+    }
     this->update();
 }
