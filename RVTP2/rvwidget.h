@@ -45,12 +45,20 @@ protected:
     int m_angleProj;
     float m_aspetcRatio;
     RVCamera *m_camera;         //!<    Pointeur sur la caméra à utiliser lors du rendu
+    RVCamera *m_camera2;
     RVBody   *m_body;           //!<    Pointeur sur l'objet 3D montré dans le widget
     RVBody   *m_plan;           //!<    Pointeur sur l'objet 3D montré dans le widget
     float m_angularVelocityX;   //!<    Vitesse angulaire autour de l'axe x
     float m_angularVelocityY;   //!<    Vitesse angulaire autour de l'axe y
     float m_angularVelocityZ;   //!<    Vitesse angulaire autour de l'axe z
     bool m_animation;           //!<    Booléen qui dit si l'animation est activée ou pas
+    QVector3D m_vector1;
+    QVector3D m_vector2;
+    QVector3D m_vector3;
+    QVector3D m_vector4;
+
+    bool isOrtho;
+    int zone;
 
 private slots:
     void update();

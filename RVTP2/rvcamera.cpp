@@ -8,7 +8,7 @@ RVCamera::RVCamera()
     m_fov  = 40;
     m_aspect = 1.33f;
     m_zMax = 100;
-    m_zMin  = 5;
+    m_zMin  = 2;
     m_isOrthogonal = false;
 }
 
@@ -27,8 +27,8 @@ QMatrix4x4 RVCamera::projectionMatrix()
     else{
         float nearPlane = m_zMin;
         float farPlane = m_zMax;
-        int bottom = -m_fov/2;
-        int top = m_fov/2;
+        int bottom = -m_fov/4;
+        int top = m_fov/4;
         int left = bottom*m_aspect;
         int right = top*m_aspect;
         proj.ortho(left,right,bottom,top,nearPlane,farPlane);
