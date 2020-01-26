@@ -1,4 +1,3 @@
 
 *.user
-build-RVTP2-Desktop_Qt_5_12_6_MSVC2017_32bit-Debug/
-build-RVTP2-Desktop_Qt_5_12_6_MSVC2017_32bit-Debug/
+*.obj
