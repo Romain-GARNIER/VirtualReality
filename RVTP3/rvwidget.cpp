@@ -46,7 +46,8 @@ void RVWidget::initializeGL()
     m_camera = new RVSphericalCamera();
     m_camera->setAspect(scale);
     m_camera->setIsOrthogonal(false);
-    m_camera->setPosition(QVector3D(0, 10, 20));
+    //m_camera->setPosition(QVector3D(0, 10, 20));
+    m_camera->setRho(45);
     m_camera->setTarget(QVector3D(0, 0, 0));
     m_camera->setZMin(10);
 
@@ -81,6 +82,18 @@ void RVWidget::initializeGL()
     m_torus->setFS(":/shaders/FS_texture_damier.fsh");
     m_torus->initialize();
 
+    QString leftImage = ":/textures/Yokohama3/negx.jpg";
+    QString rightImage = ":/textures/Yokohama3/posx.jpg";
+    QString frontImage = ":/textures/Yokohama3/posz.jpg";
+    QString backImage = ":/textures/Yokohama3/negz.jpg";
+    QString topImage = ":/textures/Yokohama3/posy.jpg";
+    QString bottomImage = ":/textures/Yokohama3/negy.jpg";
+
+    m_skybox = new RVSkyBox();
+    m_skybox->setCubeTexture(leftImage,rightImage,frontImage,backImage,topImage,bottomImage);
+    m_skybox->setCamera(m_camera);
+    m_skybox->initialize();
+
     m_scene->append(m_body);
     m_scene->append(m_plane);
     m_scene->append(m_world);
@@ -96,6 +109,7 @@ void RVWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_scene->draw();
+    m_skybox->draw();
 }
 
 void RVWidget::resizeGL(int w, int h)
@@ -123,7 +137,8 @@ void RVWidget::startAnimation()
 
 void RVWidget::changeFov(int newFov)
 {
-    m_camera->setFov(newFov);
+    //m_camera->setFov(newFov);
+    m_camera->setRho(newFov);
     this->update();
 }
 
@@ -173,8 +188,8 @@ void RVWidget::mouseMoveEvent(QMouseEvent *event)
 //    m_body->rotate(angleX, QVector3D(1, 0, 0));
 //    m_body->rotate(angleY, QVector3D(0, 1, 0));
 
-    //m_camera->setPhi();
-    //m_camera->setTheta();
+    m_camera->setPhi(m_camera->phi()+angleX);
+    m_camera->setTheta(m_camera->theta()+angleY);
 
     m_oldPos = event->pos();
 

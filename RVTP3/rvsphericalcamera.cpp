@@ -2,7 +2,9 @@
 
 RVSphericalCamera::RVSphericalCamera()
 {
-
+    m_rho = 10;
+    m_phi = 0;
+    m_theta = 0;
 }
 
 float RVSphericalCamera::phi() const
@@ -45,9 +47,9 @@ void RVSphericalCamera::setTheta(float theta)
 void RVSphericalCamera::update_position(){
     float x,y,z;
 
-    x = m_target.x() + m_rho*qSin(m_phi)*qCos(m_theta);
+    x = m_target.x() + m_rho*qCos(m_phi)*qCos(m_theta);
     y = m_target.y() + m_rho*qSin(m_phi);
-    z = m_target.z() + m_rho*qSin(m_phi)*qSin(m_theta);
+    z = m_target.z() + m_rho*qCos(m_phi)*qSin(m_theta);
 
     m_position.setX(x);
     m_position.setY(y);

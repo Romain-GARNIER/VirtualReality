@@ -24,6 +24,7 @@ SOURCES += \
     rvcube.cpp \
     rvplane.cpp \
     rvscene.cpp \
+    rvskybox.cpp \
     rvsphere.cpp \
     rvsphericalcamera.cpp \
     rvsurface.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     rvcube.h \
     rvplane.h \
     rvscene.h \
+    rvskybox.h \
     rvsphere.h \
     rvsphericalcamera.h \
     rvsurface.h \

@@ -11,6 +11,8 @@
         <file>FS_texture_damier.fsh</file>
         <file>VS_cube_texture.vsh</file>
         <file>FS_cube_texture.fsh</file>
+        <file>VS_skybox_texture.vsh</file>
+        <file>FS_skybox_texture.fsh</file>
     </qresource>
     <qresource prefix="/textures">
         <file>wood.png</file>
@@ -18,5 +20,12 @@
         <file>polytech_logo.jpg</file>
         <file>2k_earth_daymap.jpg</file>
         <file>dice_texture.jpg</file>
+        <file>Yokohama3/negx.jpg</file>
+        <file>Yokohama3/negy.jpg</file>
+        <file>Yokohama3/negz.jpg</file>
+        <file>Yokohama3/posx.jpg</file>
+        <file>Yokohama3/posy.jpg</file>
+        <file>Yokohama3/posz.jpg</file>
+        <file>Yokohama3/readme.txt</file>
     </qresource>
 </RCC>
