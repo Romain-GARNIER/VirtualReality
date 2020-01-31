@@ -10,9 +10,9 @@
         <file>FS_earth_texture.fsh</file>
         <file>FS_texture_damier.fsh</file>
         <file>VS_cube_texture.vsh</file>
-        <file>FS_cube_texture.fsh</file>
-        <file>VS_skybox_texture.vsh</file>
         <file>FS_skybox_texture.fsh</file>
+        <file>VS_skybox_texture.vsh</file>
+        <file>FS_cube_texture.fsh</file>
     </qresource>
     <qresource prefix="/textures">
         <file>wood.png</file>
@@ -27,5 +27,11 @@
         <file>Yokohama3/posy.jpg</file>
         <file>Yokohama3/posz.jpg</file>
         <file>Yokohama3/readme.txt</file>
+        <file>skybox1/negx.jpg</file>
+        <file>skybox1/negy.jpg</file>
+        <file>skybox1/negz.jpg</file>
+        <file>skybox1/posx.jpg</file>
+        <file>skybox1/posy.jpg</file>
+        <file>skybox1/posz.jpg</file>
     </qresource>
 </RCC>

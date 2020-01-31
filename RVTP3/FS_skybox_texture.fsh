@@ -1,5 +1,5 @@
 varying highp vec3 outTexCoord;
-uniform samplerCube texture0;
+uniform highp samplerCube texture0;
 
 void main(void)
 {

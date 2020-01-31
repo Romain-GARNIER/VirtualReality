@@ -23,23 +23,23 @@
 
     void RVSkyBox::initializeBuffer(){
         //Definitions des 8 sommets du cube
-        QVector3D A(0, 0, 1);
-        QVector3D B(1, 0, 1);
-        QVector3D C(1, 1, 1);
-        QVector3D D(0, 1, 1);
-        QVector3D E(0, 0, 0);
-        QVector3D F(1, 0, 0);
-        QVector3D G(1, 1, 0);
-        QVector3D H(0, 1, 0);
+        QVector3D A(-1, 1, 1);
+        QVector3D B(1, 1, 1);
+        QVector3D C(1, -1, 1);
+        QVector3D D(-1,-1, 1);
+        QVector3D E(-1, -1, -1);
+        QVector3D F(1, -1, -1);
+        QVector3D G(1, 1, -1);
+        QVector3D H(-1, 1, -1);
 
         //On prépare le tableau des données
         QVector3D vertexData[] = {
-            A, B, C, D, //face avant
-            H, G, F, E, //face arriere
-            A, D, H, E, //face gauche
-            B, F, G, C, //face droite
-            D, C, G, H, //face dessus
-            A, E, F, B, //face dessous
+           A, B, C, D, //face avant
+           E, F, G, H, //face arriere
+           B, G, F, C, //face droite
+           H, G, B, A, //face dessus
+           D, C, F, E, //face dessous
+           D, E, H, A, //face gauche
         };
 
         //Lien du VBO avec le contexte de rendu OpenG
@@ -88,61 +88,57 @@
         m_vao.release();
         m_program.release();
 
-        if (m_texture) {
-            m_texture->release();
-            glDisable(GL_TEXTURE0);
-            glDisable(GL_TEXTURE_CUBE_MAP );
-        }
+//        if (m_texture) {
+//            m_texture->release();
+//            glDisable(GL_TEXTURE0);
+//            glDisable(GL_TEXTURE_CUBE_MAP );
+//        }
 
     }
 
 
-    void RVSkyBox::setCubeTexture(QString leftImage, QString rightImage,
-                                  QString frontImage, QString backImage,
-                                  QString topImage, QString bottomImage){
+    void RVSkyBox::setCubeTexture(QString leftImage, QString rightImage, QString frontImage, QString backImage, QString topImage, QString bottomImage)
+    {
         m_texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
         m_texture->create();
-
-        QImage posXP = QImage(rightImage).convertToFormat(QImage::Format_RGBA8888);
-        QImage posXN = QImage(leftImage).convertToFormat(QImage::Format_RGBA8888);
-        QImage posZP = QImage(frontImage).convertToFormat(QImage::Format_RGBA8888);
-        QImage posZN = QImage(backImage).convertToFormat(QImage::Format_RGBA8888);
-        QImage posYP = QImage(topImage).convertToFormat(QImage::Format_RGBA8888);
-        QImage posYN = QImage(bottomImage).convertToFormat(QImage::Format_RGBA8888);
-
-        m_texture->setSize(posXP.width(),posXP.height(),posXP.depth());
+        QImage posX = QImage(rightImage).convertToFormat(QImage::Format_RGBA8888);
+        QImage negX = QImage(leftImage).convertToFormat(QImage::Format_RGBA8888);
+        QImage posY = QImage(topImage).convertToFormat(QImage::Format_RGBA8888);
+        QImage negY = QImage(bottomImage).convertToFormat(QImage::Format_RGBA8888);
+        QImage posZ = QImage(backImage).convertToFormat(QImage::Format_RGBA8888);
+        QImage negZ = QImage(frontImage).convertToFormat(QImage::Format_RGBA8888);
+        m_texture->setSize(posX.width(),posX.height(),posX.depth());
         m_texture->setFormat(QOpenGLTexture::RGBA8_UNorm);
         m_texture->allocateStorage();
-
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posXP.constBits(),
+                               posX.constBits(),
                                Q_NULLPTR);
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posXN.constBits(),
+                               negX.constBits(),
                                Q_NULLPTR);
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posYP.constBits(),
+                               posY.constBits(),
                                Q_NULLPTR);
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posYN.constBits(),
+                               negY.constBits(),
                                Q_NULLPTR);
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posZP.constBits(),
+                               posZ.constBits(),
                                Q_NULLPTR);
         m_texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ,
                                QOpenGLTexture::RGBA,
                                QOpenGLTexture::UInt8,
-                               posZN.constBits(),
+                               negZ.constBits(),
                                Q_NULLPTR);
         m_texture->generateMipMaps();
         m_texture->setWrapMode(QOpenGLTexture::ClampToEdge);

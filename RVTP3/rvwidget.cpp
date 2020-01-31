@@ -49,7 +49,8 @@ void RVWidget::initializeGL()
     //m_camera->setPosition(QVector3D(0, 10, 20));
     m_camera->setRho(45);
     m_camera->setTarget(QVector3D(0, 0, 0));
-    m_camera->setZMin(10);
+    m_camera->setZMax(500);
+    m_camera->setZMin(1);
 
     m_scene = new RVScene();
     m_scene->setCamera(m_camera);
@@ -90,14 +91,17 @@ void RVWidget::initializeGL()
     QString bottomImage = ":/textures/Yokohama3/negy.jpg";
 
     m_skybox = new RVSkyBox();
-    m_skybox->setCubeTexture(leftImage,rightImage,frontImage,backImage,topImage,bottomImage);
     m_skybox->setCamera(m_camera);
+    m_skybox->setPosition(QVector3D(0,0,0));
+    m_skybox->setCubeTexture(leftImage,rightImage,frontImage,backImage,topImage,bottomImage);
+    m_skybox->setScale(150);
     m_skybox->initialize();
 
     m_scene->append(m_body);
     m_scene->append(m_plane);
     m_scene->append(m_world);
-    m_scene->append(m_torus);
+    m_scene->append(m_torus);    
+    m_scene->append(m_skybox);
 
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -109,7 +113,7 @@ void RVWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_scene->draw();
-    m_skybox->draw();
+    //m_skybox->draw();
 }
 
 void RVWidget::resizeGL(int w, int h)
