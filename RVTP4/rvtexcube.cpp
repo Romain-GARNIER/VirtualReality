@@ -3,8 +3,8 @@
 RVTexCube::RVTexCube()
     :RVBody()
 {
-    m_VSFileName = ":/shaders/VS_cube_texture.vsh";
-    m_FSFileName = ":/shaders/FS_cube_texture.fsh";
+    m_VSFileName = ":/shaders/VS_lit_texture_cube.vsh";
+    m_FSFileName = ":/shaders/FS_lit_texture.fsh";
 }
 
 void RVTexCube::draw()
@@ -36,12 +36,19 @@ void RVTexCube::draw()
     m_program.bind();
     m_vao.bind();
 
-    QMatrix4x4 matrix;
-    matrix = m_camera->projectionMatrix() * m_camera->viewMatrix() * this->modelMatrix();
-    m_program.setUniformValue("u_ModelViewProjectionMatrix", matrix);
-    m_program.setUniformValue("u_color", m_globalColor);
+    m_program.setUniformValue("u_ModelMatrix", this->modelMatrix());
+    m_program.setUniformValue("u_ViewMatrix", m_camera->viewMatrix());
+    m_program.setUniformValue("u_ProjectionMatrix", m_camera->projectionMatrix());
     m_program.setUniformValue("u_opacity", m_opacity);
+    m_program.setUniformValue("u_color", m_globalColor);
     m_program.setUniformValue("texture0", 0);
+
+    m_program.setUniformValue("light_ambient_color", m_light->ambient());
+    m_program.setUniformValue("light_diffuse_color", m_light->diffuse());
+    m_program.setUniformValue("light_specular_color", m_light->specular());
+    m_program.setUniformValue("light_specular_strength", m_specStrength);
+    m_program.setUniformValue("light_position", m_light->position());
+    m_program.setUniformValue("eye_position", m_camera->position());
 
     for (int i = 0; i<6; i++)
         glDrawArrays(GL_TRIANGLE_FAN, 4*i, 4);
@@ -82,6 +89,14 @@ void RVTexCube::initializeBuffer()
     QVector3D NE(1, 1, 0);
     QVector3D NW(0, 1, 0);
 
+    //Les vecteurs normaux
+    QVector3D up(0, 1, 0);
+    QVector3D down(0,-1,0);
+    QVector3D left(-1,0,0);
+    QVector3D right(1,0,0);
+    QVector3D front(0,0,-1);
+    QVector3D back(0,0,1);
+
     //On prépare le tableau des données
     QVector3D vertexData[] = {
         A, B, C, D, //face avant
@@ -101,7 +116,13 @@ void RVTexCube::initializeBuffer()
         SW, SE, NE, NW,
         SW, SE, NE, NW,
         SW, SE, NE, NW,
-        SW, SE, NE, NW
+        SW, SE, NE, NW,
+        back, back, back , back,
+        front, front, front, front,
+        left, left, left, left,
+        right, right, right, right,
+        up,up,up,up,
+        down,down,down,down
     };
 
     //Lien du VBO avec le contexte de rendu OpenG
@@ -138,6 +159,10 @@ void RVTexCube::initializeVAO()
 
     m_program.setAttributeBuffer("rv_TexCoord", GL_FLOAT, sizeof(QVector3D)*48, 3);
     m_program.enableAttributeArray("rv_TexCoord");
+
+    //Définition de l'attribut de coordonnée vecteur normal
+    m_program.setAttributeBuffer("rv_Normal", GL_FLOAT, sizeof(QVector3D)*72, 3);
+    m_program.enableAttributeArray("rv_Normal");
 
     //Libération
     m_vao.release();

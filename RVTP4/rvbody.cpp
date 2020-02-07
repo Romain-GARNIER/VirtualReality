@@ -33,6 +33,7 @@ RVBody::RVBody()
     m_culling = true;
     m_scale = 1;
     m_globalColor = QColor(255, 255, 255);
+    m_specStrength = 15;
 
     //shaders qui utilisent les textures
     m_VSFileName = ":/shaders/VS_lit_texture.vsh";

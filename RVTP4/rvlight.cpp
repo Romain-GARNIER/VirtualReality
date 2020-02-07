@@ -2,6 +2,10 @@
 
 RVLight::RVLight()
 {
+    m_position = QVector3D(10,0,10);
+    m_ambient = QColor(100, 100, 100);
+    m_diffuse = QColor(255, 255, 255);
+    m_specular = QColor(255, 255, 255);
 }
 
 QVector3D RVLight::position() const

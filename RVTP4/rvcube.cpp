@@ -33,6 +33,13 @@ void RVCube::draw()
     m_program.setUniformValue("u_color", m_globalColor);
     m_program.setUniformValue("u_opacity", m_opacity);
 
+    m_program.setUniformValue("light_ambient_color", QColor(100, 100, 100));
+    m_program.setUniformValue("light_diffuse_color", QColor(255, 255, 255));
+    m_program.setUniformValue("light_specular_color", QColor(255, 255, 255));
+    m_program.setUniformValue("light_specular_strength", 20.0f);
+    m_program.setUniformValue("light_position", QVector3D(10, 0, 10));
+    m_program.setUniformValue("eye_position", m_camera->position());
+
     for (int i = 0; i<6; i++)
         glDrawArrays(GL_TRIANGLE_FAN, 4*i, 4);
 
@@ -58,7 +65,15 @@ void RVCube::initializeBuffer()
     QVector3D bleu(0, 0, 1);
     QVector3D cyan(0, 1, 1);
     QVector3D magenta(1, 0, 1);
-    QVector3D jaune(1, 1, 0);
+    QVector3D jaune(1, 1, 0);    
+
+    //Définition des normales
+    QVector3D up(0, 1, 0);
+    QVector3D down(0, -1, 0);
+    QVector3D right(1, 0, 0);
+    QVector3D left(-1, 0, 0);
+    QVector3D front(0, 0, 1);
+    QVector3D back(0, 0, -1);
 
     //On prépare le tableau des données
     QVector3D vertexData[] = {
@@ -73,7 +88,13 @@ void RVCube::initializeBuffer()
         vert, vert, vert, vert,
         magenta, magenta, magenta, magenta,
         bleu, bleu, bleu, bleu,
-        jaune, jaune, jaune, jaune
+        jaune, jaune, jaune, jaune,
+        front, front, front, front,
+        back, back, back, back,
+        left, left, left, left,
+        right, right, right, right,
+        up, up, up, up,
+        down, down, down, down
     };
 
     //Lien du VBO avec le contexte de rendu OpenG
@@ -107,6 +128,10 @@ void RVCube::initializeVAO()
 
     m_program.setAttributeBuffer("rv_Color", GL_FLOAT, sizeof(QVector3D)*24, 3);
     m_program.enableAttributeArray("rv_Color");
+
+    //Définition de l'attribut de coordonnée vecteur normal
+    m_program.setAttributeBuffer("rv_Normal", GL_FLOAT, sizeof(QVector3D)*48, 3);
+    m_program.enableAttributeArray("rv_Normal");
 
     //Libération
     m_vao.release();

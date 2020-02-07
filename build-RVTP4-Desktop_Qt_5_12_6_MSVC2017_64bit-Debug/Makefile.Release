@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\RVTP4 -I. -IC:\Qt\5.12.6\msvc2017_64\include -IC:\Qt\5.12.6\msvc2017_64\include\QtWidgets -IC:\Qt\5.12.6\msvc2017_64\include\QtGui -IC:\Qt\5.12.6\msvc2017_64\include\QtANGLE -IC:\Qt\5.12.6\msvc2017_64\include\QtCore -Irelease -I. -I/include -IC:\Qt\5.12.6\msvc2017_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = "C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x64\opengl32.lib" C:\Qt\5.12.6\msvc2017_64\lib\Qt5Widgets.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Gui.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Core.lib  C:\Qt\5.12.6\msvc2017_64\lib\qtmain.lib /LIBPATH:C:\openssl\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-winx64\lib /LIBPATH:C:\Utils\postgresql\pgsql\lib shell32.lib 
+LIBS          = "C:\Program Files (x86)\Windows Kits\10\lib\10.0.17763.0\um\x64\opengl32.lib" C:\Qt\5.12.6\msvc2017_64\lib\Qt5Widgets.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Gui.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Core.lib  C:\Qt\5.12.6\msvc2017_64\lib\qtmain.lib /LIBPATH:C:\openssl\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-winx64\lib /LIBPATH:C:\Utils\postgresql\pgsql\lib shell32.lib 
 QMAKE         = C:\Qt\5.12.6\msvc2017_64\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -54,6 +54,7 @@ SOURCES       = ..\RVTP4\main.cpp \
 		..\RVTP4\rvcamera.cpp \
 		..\RVTP4\rvcube.cpp \
 		..\RVTP4\rvdice.cpp \
+		..\RVTP4\rvlight.cpp \
 		..\RVTP4\rvplane.cpp \
 		..\RVTP4\rvscene.cpp \
 		..\RVTP4\rvskybox.cpp \
@@ -73,6 +74,7 @@ OBJECTS       = release\main.obj \
 		release\rvcamera.obj \
 		release\rvcube.obj \
 		release\rvdice.obj \
+		release\rvlight.obj \
 		release\rvplane.obj \
 		release\rvscene.obj \
 		release\rvskybox.obj \
@@ -97,6 +99,7 @@ DIST          = FS_plan.fsh \
 		..\RVTP4\rvcamera.h \
 		..\RVTP4\rvcube.h \
 		..\RVTP4\rvdice.h \
+		..\RVTP4\rvlight.h \
 		..\RVTP4\rvplane.h \
 		..\RVTP4\rvscene.h \
 		..\RVTP4\rvskybox.h \
@@ -112,6 +115,7 @@ DIST          = FS_plan.fsh \
 		..\RVTP4\rvcamera.cpp \
 		..\RVTP4\rvcube.cpp \
 		..\RVTP4\rvdice.cpp \
+		..\RVTP4\rvlight.cpp \
 		..\RVTP4\rvplane.cpp \
 		..\RVTP4\rvscene.cpp \
 		..\RVTP4\rvskybox.cpp \
@@ -197,7 +201,7 @@ all: Makefile.Release  release\RVTP4.exe
 
 release\RVTP4.exe: C:\Qt\5.12.6\msvc2017_64\lib\Qt5Widgets.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Gui.lib C:\Qt\5.12.6\msvc2017_64\lib\Qt5Core.lib C:\Qt\5.12.6\msvc2017_64\lib\qtmain.lib ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
-release\main.obj release\mainwindow.obj release\qopenglskyboxwidget.obj release\rvbody.obj release\rvcamera.obj release\rvcube.obj release\rvdice.obj release\rvplane.obj release\rvscene.obj release\rvskybox.obj release\rvsphere.obj release\rvsphericalcamera.obj release\rvsurface.obj release\rvtexcube.obj release\rvtorus.obj release\rvwidget.obj release\qrc_RVResources.obj release\moc_mainwindow.obj release\moc_qopenglskyboxwidget.obj release\moc_rvwidget.obj
+release\main.obj release\mainwindow.obj release\qopenglskyboxwidget.obj release\rvbody.obj release\rvcamera.obj release\rvcube.obj release\rvdice.obj release\rvlight.obj release\rvplane.obj release\rvscene.obj release\rvskybox.obj release\rvsphere.obj release\rvsphericalcamera.obj release\rvsurface.obj release\rvtexcube.obj release\rvtorus.obj release\rvwidget.obj release\qrc_RVResources.obj release\moc_mainwindow.obj release\moc_qopenglskyboxwidget.obj release\moc_rvwidget.obj
 $(LIBS)
 <<
 
@@ -207,10 +211,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) RVTP4.zip $(SOURCES) $(DIST) ..\RVTP4\RVTP4.pro C:\Qt\5.12.6\msvc2017_64\mkspecs\features\spec_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\angle.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\windows-vulkan.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\msvc-desktop.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\qconfig.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_core.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_help.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_location.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_network.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_vulkan_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt_functions.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt_config.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\win32-msvc\qmake.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exclusive_builds.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\msvc-version.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\toolchain.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\default_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\default_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\resolve_config.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\default_post.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\build_pass.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qml_debug.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\precompile_header.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\warn_on.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\resources.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\moc.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\opengl.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\uic.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qmake_use.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\file_copies.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\windows.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\testcase_targets.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exceptions.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\yacc.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\lex.prf ..\RVTP4\RVTP4.pro ..\RVTP4\RVResources.qrc C:\Qt\5.12.6\msvc2017_64\lib\Qt5Widgets.prl C:\Qt\5.12.6\msvc2017_64\lib\Qt5Gui.prl C:\Qt\5.12.6\msvc2017_64\lib\Qt5Core.prl C:\Qt\5.12.6\msvc2017_64\lib\qtmain.prl   ..\RVTP4\RVResources.qrc C:\Qt\5.12.6\msvc2017_64\mkspecs\features\data\dummy.cpp ..\RVTP4\mainwindow.h ..\RVTP4\qopenglskyboxwidget.h ..\RVTP4\rvbody.h ..\RVTP4\rvcamera.h ..\RVTP4\rvcube.h ..\RVTP4\rvdice.h ..\RVTP4\rvplane.h ..\RVTP4\rvscene.h ..\RVTP4\rvskybox.h ..\RVTP4\rvsphere.h ..\RVTP4\rvsphericalcamera.h ..\RVTP4\rvsurface.h ..\RVTP4\rvtexcube.h ..\RVTP4\rvtorus.h ..\RVTP4\rvwidget.h  ..\RVTP4\main.cpp ..\RVTP4\mainwindow.cpp ..\RVTP4\qopenglskyboxwidget.cpp ..\RVTP4\rvbody.cpp ..\RVTP4\rvcamera.cpp ..\RVTP4\rvcube.cpp ..\RVTP4\rvdice.cpp ..\RVTP4\rvplane.cpp ..\RVTP4\rvscene.cpp ..\RVTP4\rvskybox.cpp ..\RVTP4\rvsphere.cpp ..\RVTP4\rvsphericalcamera.cpp ..\RVTP4\rvsurface.cpp ..\RVTP4\rvtexcube.cpp ..\RVTP4\rvtorus.cpp ..\RVTP4\rvwidget.cpp ..\RVTP4\mainwindow.ui    
+	$(ZIP) RVTP4.zip $(SOURCES) $(DIST) ..\RVTP4\RVTP4.pro C:\Qt\5.12.6\msvc2017_64\mkspecs\features\spec_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\angle.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\windows-vulkan.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\msvc-desktop.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\qconfig.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_core.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_help.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_location.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_network.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_vulkan_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt_functions.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt_config.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\win32-msvc\qmake.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exclusive_builds.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\common\msvc-version.conf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\toolchain.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\default_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\default_pre.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\resolve_config.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\default_post.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\build_pass.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qml_debug.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\precompile_header.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\warn_on.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qt.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\resources.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\moc.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\opengl.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\uic.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\qmake_use.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\file_copies.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\win32\windows.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\testcase_targets.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\exceptions.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\yacc.prf C:\Qt\5.12.6\msvc2017_64\mkspecs\features\lex.prf ..\RVTP4\RVTP4.pro ..\RVTP4\RVResources.qrc C:\Qt\5.12.6\msvc2017_64\lib\Qt5Widgets.prl C:\Qt\5.12.6\msvc2017_64\lib\Qt5Gui.prl C:\Qt\5.12.6\msvc2017_64\lib\Qt5Core.prl C:\Qt\5.12.6\msvc2017_64\lib\qtmain.prl   ..\RVTP4\RVResources.qrc C:\Qt\5.12.6\msvc2017_64\mkspecs\features\data\dummy.cpp ..\RVTP4\mainwindow.h ..\RVTP4\qopenglskyboxwidget.h ..\RVTP4\rvbody.h ..\RVTP4\rvcamera.h ..\RVTP4\rvcube.h ..\RVTP4\rvdice.h ..\RVTP4\rvlight.h ..\RVTP4\rvplane.h ..\RVTP4\rvscene.h ..\RVTP4\rvskybox.h ..\RVTP4\rvsphere.h ..\RVTP4\rvsphericalcamera.h ..\RVTP4\rvsurface.h ..\RVTP4\rvtexcube.h ..\RVTP4\rvtorus.h ..\RVTP4\rvwidget.h  ..\RVTP4\main.cpp ..\RVTP4\mainwindow.cpp ..\RVTP4\qopenglskyboxwidget.cpp ..\RVTP4\rvbody.cpp ..\RVTP4\rvcamera.cpp ..\RVTP4\rvcube.cpp ..\RVTP4\rvdice.cpp ..\RVTP4\rvlight.cpp ..\RVTP4\rvplane.cpp ..\RVTP4\rvscene.cpp ..\RVTP4\rvskybox.cpp ..\RVTP4\rvsphere.cpp ..\RVTP4\rvsphericalcamera.cpp ..\RVTP4\rvsurface.cpp ..\RVTP4\rvtexcube.cpp ..\RVTP4\rvtorus.cpp ..\RVTP4\rvwidget.cpp ..\RVTP4\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.obj release\mainwindow.obj release\qopenglskyboxwidget.obj release\rvbody.obj release\rvcamera.obj release\rvcube.obj release\rvdice.obj release\rvplane.obj release\rvscene.obj release\rvskybox.obj release\rvsphere.obj release\rvsphericalcamera.obj release\rvsurface.obj release\rvtexcube.obj release\rvtorus.obj release\rvwidget.obj release\qrc_RVResources.obj release\moc_mainwindow.obj release\moc_qopenglskyboxwidget.obj release\moc_rvwidget.obj
+	-$(DEL_FILE) release\main.obj release\mainwindow.obj release\qopenglskyboxwidget.obj release\rvbody.obj release\rvcamera.obj release\rvcube.obj release\rvdice.obj release\rvlight.obj release\rvplane.obj release\rvscene.obj release\rvskybox.obj release\rvsphere.obj release\rvsphericalcamera.obj release\rvsurface.obj release\rvtexcube.obj release\rvtorus.obj release\rvwidget.obj release\qrc_RVResources.obj release\moc_mainwindow.obj release\moc_qopenglskyboxwidget.obj release\moc_rvwidget.obj
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -234,10 +238,13 @@ release\qrc_RVResources.cpp: ..\RVTP4\RVResources.qrc \
 		C:\Qt\5.12.6\msvc2017_64\bin\rcc.exe \
 		..\RVTP4\VS_cube_texture.vsh \
 		..\RVTP4\FS_texture_damier.fsh \
+		..\RVTP4\VS_lit_texture.vsh \
 		..\RVTP4\FS_simple_texture.fsh \
 		..\RVTP4\VS_simpler.vsh \
 		..\RVTP4\FS_earth_texture.fsh \
+		..\RVTP4\VS_lit_texture_cube.vsh \
 		..\RVTP4\FS_cube_texture.fsh \
+		..\RVTP4\FS_lit_texture.fsh \
 		..\RVTP4\VS_skybox_texture.vsh \
 		..\RVTP4\VS_simple.vsh \
 		..\RVTP4\FS_simple.fsh \
@@ -381,9 +388,12 @@ release\moc_mainwindow.cpp: ..\RVTP4\mainwindow.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qtouchdevice.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qicon.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QColorDialog \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qcolordialog.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qdialog.h \
 		release\moc_predefs.h \
 		C:\Qt\5.12.6\msvc2017_64\bin\moc.exe
-	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/garni/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/garni/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt" ..\RVTP4\mainwindow.h -o release\moc_mainwindow.cpp
+	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/Romain/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/Romain/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" ..\RVTP4\mainwindow.h -o release\moc_mainwindow.cpp
 
 release\moc_qopenglskyboxwidget.cpp: ..\RVTP4\qopenglskyboxwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QOpenGLWidget \
@@ -524,7 +534,7 @@ release\moc_qopenglskyboxwidget.cpp: ..\RVTP4\qopenglskyboxwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QMouseEvent \
 		release\moc_predefs.h \
 		C:\Qt\5.12.6\msvc2017_64\bin\moc.exe
-	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/garni/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/garni/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt" ..\RVTP4\qopenglskyboxwidget.h -o release\moc_qopenglskyboxwidget.cpp
+	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/Romain/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/Romain/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" ..\RVTP4\qopenglskyboxwidget.h -o release\moc_qopenglskyboxwidget.cpp
 
 release\moc_rvwidget.cpp: ..\RVTP4\rvwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QOpenGLWidget \
@@ -677,6 +687,7 @@ release\moc_rvwidget.cpp: ..\RVTP4\rvwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
+		..\RVTP4\rvlight.h \
 		..\RVTP4\rvplane.h \
 		..\RVTP4\rvsphere.h \
 		..\RVTP4\rvsurface.h \
@@ -692,7 +703,7 @@ release\moc_rvwidget.cpp: ..\RVTP4\rvwidget.h \
 		..\RVTP4\rvsphericalcamera.h \
 		release\moc_predefs.h \
 		C:\Qt\5.12.6\msvc2017_64\bin\moc.exe
-	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/garni/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/garni/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt" ..\RVTP4\rvwidget.h -o release\moc_rvwidget.cpp
+	C:\Qt\5.12.6\msvc2017_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/Romain/Documents/GitHub/VirtualReality/build-RVTP4-Desktop_Qt_5_12_6_MSVC2017_64bit-Debug/release/moc_predefs.h -IC:/Qt/5.12.6/msvc2017_64/mkspecs/win32-msvc -IC:/Users/Romain/Documents/GitHub/VirtualReality/RVTP4 -IC:/Qt/5.12.6/msvc2017_64/include -IC:/Qt/5.12.6/msvc2017_64/include/QtWidgets -IC:/Qt/5.12.6/msvc2017_64/include/QtGui -IC:/Qt/5.12.6/msvc2017_64/include/QtANGLE -IC:/Qt/5.12.6/msvc2017_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" ..\RVTP4\rvwidget.h -o release\moc_rvwidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -854,6 +865,7 @@ ui_mainwindow.h: ..\RVTP4\mainwindow.ui \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
+		..\RVTP4\rvlight.h \
 		..\RVTP4\rvplane.h \
 		..\RVTP4\rvsphere.h \
 		..\RVTP4\rvsurface.h \
@@ -988,6 +1000,9 @@ release\main.obj: ..\RVTP4\main.cpp ..\RVTP4\mainwindow.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qtouchdevice.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qicon.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QColorDialog \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qcolordialog.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qdialog.h \
 		..\RVTP4\qopenglskyboxwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QOpenGLWidget \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qopenglwidget.h \
@@ -1138,6 +1153,9 @@ release\mainwindow.obj: ..\RVTP4\mainwindow.cpp ..\RVTP4\mainwindow.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qtouchdevice.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qicon.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QColorDialog \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qcolordialog.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\qdialog.h \
 		ui_mainwindow.h
 
 release\qopenglskyboxwidget.obj: ..\RVTP4\qopenglskyboxwidget.cpp ..\RVTP4\qopenglskyboxwidget.h \
@@ -1417,7 +1435,8 @@ release\rvbody.obj: ..\RVTP4\rvbody.cpp ..\RVTP4\rvbody.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvcamera.obj: ..\RVTP4\rvcamera.cpp ..\RVTP4\rvcamera.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QMatrix4x4 \
@@ -1637,7 +1656,8 @@ release\rvcube.obj: ..\RVTP4\rvcube.cpp ..\RVTP4\rvcube.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvdice.obj: ..\RVTP4\rvdice.cpp ..\RVTP4\rvdice.h \
 		..\RVTP4\rvtexcube.h \
@@ -1780,7 +1800,64 @@ release\rvdice.obj: ..\RVTP4\rvdice.cpp ..\RVTP4\rvdice.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
+
+release\rvlight.obj: ..\RVTP4\rvlight.cpp ..\RVTP4\rvlight.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QVector3D \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qvector3d.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qtguiglobal.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qglobal.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qconfig.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qtcore-config.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qsysinfo.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qlogging.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qflags.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qatomic.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qmutex.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qnumeric.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qversiontagging.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qtgui-config.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qpoint.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qnamespace.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qmetatype.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qbytearray.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qrefcount.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qarraydata.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qvarlengtharray.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qcontainerfwd.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qalgorithms.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qobjectdefs.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qobjectdefs_impl.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qcolor.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qrgb.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringlist.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qlist.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qiterator.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qhashfunctions.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstring.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qchar.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringliteral.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringalgorithms.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringview.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringbuilder.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qpair.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qbytearraylist.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qregexp.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtCore\qstringmatcher.h \
+		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qrgba64.h
 
 release\rvplane.obj: ..\RVTP4\rvplane.cpp ..\RVTP4\rvplane.h \
 		..\RVTP4\rvbody.h \
@@ -1922,7 +1999,8 @@ release\rvplane.obj: ..\RVTP4\rvplane.cpp ..\RVTP4\rvplane.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvscene.obj: ..\RVTP4\rvscene.cpp ..\RVTP4\rvscene.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QList \
@@ -2065,7 +2143,8 @@ release\rvscene.obj: ..\RVTP4\rvscene.cpp ..\RVTP4\rvscene.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvskybox.obj: ..\RVTP4\rvskybox.cpp ..\RVTP4\rvskybox.h \
 		..\RVTP4\rvbody.h \
@@ -2207,7 +2286,8 @@ release\rvskybox.obj: ..\RVTP4\rvskybox.cpp ..\RVTP4\rvskybox.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvsphere.obj: ..\RVTP4\rvsphere.cpp ..\RVTP4\rvsphere.h \
 		..\RVTP4\rvsurface.h \
@@ -2353,7 +2433,8 @@ release\rvsphere.obj: ..\RVTP4\rvsphere.cpp ..\RVTP4\rvsphere.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvsphericalcamera.obj: ..\RVTP4\rvsphericalcamera.cpp ..\RVTP4\rvsphericalcamera.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtCore\QtMath \
@@ -2579,7 +2660,8 @@ release\rvsurface.obj: ..\RVTP4\rvsurface.cpp ..\RVTP4\rvsurface.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvtexcube.obj: ..\RVTP4\rvtexcube.cpp ..\RVTP4\rvtexcube.h \
 		..\RVTP4\rvbody.h \
@@ -2721,7 +2803,8 @@ release\rvtexcube.obj: ..\RVTP4\rvtexcube.cpp ..\RVTP4\rvtexcube.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvtorus.obj: ..\RVTP4\rvtorus.cpp ..\RVTP4\rvtorus.h \
 		..\RVTP4\rvsurface.h \
@@ -2867,7 +2950,8 @@ release\rvtorus.obj: ..\RVTP4\rvtorus.cpp ..\RVTP4\rvtorus.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
-		..\RVTP4\rvcamera.h
+		..\RVTP4\rvcamera.h \
+		..\RVTP4\rvlight.h
 
 release\rvwidget.obj: ..\RVTP4\rvwidget.cpp ..\RVTP4\rvwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtWidgets\QOpenGLWidget \
@@ -3020,6 +3104,7 @@ release\rvwidget.obj: ..\RVTP4\rvwidget.cpp ..\RVTP4\rvwidget.h \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QColor \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\QOpenGLTexture \
 		C:\Qt\5.12.6\msvc2017_64\include\QtGui\qopengltexture.h \
+		..\RVTP4\rvlight.h \
 		..\RVTP4\rvplane.h \
 		..\RVTP4\rvsphere.h \
 		..\RVTP4\rvsurface.h \

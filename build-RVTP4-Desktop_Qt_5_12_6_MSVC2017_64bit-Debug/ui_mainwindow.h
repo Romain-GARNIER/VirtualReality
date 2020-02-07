@@ -21,7 +21,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
-#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -51,7 +51,16 @@ public:
     QSlider *opacitySlider;
     QLabel *label_3;
     QSlider *horizontalSlider;
-    QSpacerItem *verticalSpacer;
+    QGroupBox *groupBox_3;
+    QVBoxLayout *verticalLayout_4;
+    QSpinBox *xLight;
+    QSpinBox *yLight;
+    QSpinBox *zLight;
+    QPushButton *ambientButton;
+    QPushButton *diffuseButton;
+    QPushButton *specularButton;
+    QLabel *label_4;
+    QSlider *horizontalSlider_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -59,7 +68,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(860, 767);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         horizontalLayout_2 = new QHBoxLayout(centralwidget);
@@ -177,9 +186,83 @@ public:
 
         verticalLayout->addWidget(groupBox);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        groupBox_3 = new QGroupBox(centralwidget);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setAcceptDrops(false);
+        verticalLayout_4 = new QVBoxLayout(groupBox_3);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        xLight = new QSpinBox(groupBox_3);
+        xLight->setObjectName(QString::fromUtf8("xLight"));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(xLight->sizePolicy().hasHeightForWidth());
+        xLight->setSizePolicy(sizePolicy2);
+        xLight->setMinimum(-99);
+        xLight->setValue(10);
 
-        verticalLayout->addItem(verticalSpacer);
+        verticalLayout_4->addWidget(xLight);
+
+        yLight = new QSpinBox(groupBox_3);
+        yLight->setObjectName(QString::fromUtf8("yLight"));
+        sizePolicy2.setHeightForWidth(yLight->sizePolicy().hasHeightForWidth());
+        yLight->setSizePolicy(sizePolicy2);
+        yLight->setMinimum(-99);
+
+        verticalLayout_4->addWidget(yLight);
+
+        zLight = new QSpinBox(groupBox_3);
+        zLight->setObjectName(QString::fromUtf8("zLight"));
+        sizePolicy2.setHeightForWidth(zLight->sizePolicy().hasHeightForWidth());
+        zLight->setSizePolicy(sizePolicy2);
+        zLight->setMinimum(-99);
+        zLight->setValue(10);
+
+        verticalLayout_4->addWidget(zLight);
+
+        ambientButton = new QPushButton(groupBox_3);
+        ambientButton->setObjectName(QString::fromUtf8("ambientButton"));
+        ambientButton->setStyleSheet(QString::fromUtf8("background-color: rgb(128, 128, 128);\n"
+"border: 1px solid black;\n"
+"border-radius: 5px;"));
+
+        verticalLayout_4->addWidget(ambientButton);
+
+        diffuseButton = new QPushButton(groupBox_3);
+        diffuseButton->setObjectName(QString::fromUtf8("diffuseButton"));
+        diffuseButton->setStyleSheet(QString::fromUtf8("background-color: rgb(252, 253, 255);\n"
+"border: 1px solid black;\n"
+"border-radius: 5px;"));
+
+        verticalLayout_4->addWidget(diffuseButton);
+
+        specularButton = new QPushButton(groupBox_3);
+        specularButton->setObjectName(QString::fromUtf8("specularButton"));
+        specularButton->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 127);\n"
+"border: 1px solid black;\n"
+"border-radius: 5px;"));
+
+        verticalLayout_4->addWidget(specularButton);
+
+        label_4 = new QLabel(groupBox_3);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        verticalLayout_4->addWidget(label_4);
+
+        horizontalSlider_2 = new QSlider(groupBox_3);
+        horizontalSlider_2->setObjectName(QString::fromUtf8("horizontalSlider_2"));
+        sizePolicy1.setHeightForWidth(horizontalSlider_2->sizePolicy().hasHeightForWidth());
+        horizontalSlider_2->setSizePolicy(sizePolicy1);
+        horizontalSlider_2->setMinimum(1);
+        horizontalSlider_2->setMaximum(75);
+        horizontalSlider_2->setValue(15);
+        horizontalSlider_2->setSliderPosition(15);
+        horizontalSlider_2->setOrientation(Qt::Horizontal);
+
+        verticalLayout_4->addWidget(horizontalSlider_2);
+
+
+        verticalLayout->addWidget(groupBox_3);
 
 
         horizontalLayout->addLayout(verticalLayout);
@@ -190,7 +273,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 860, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -202,6 +285,13 @@ public:
         QObject::connect(opacitySlider, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeOpacity(int)));
         QObject::connect(checkBox, SIGNAL(toggled(bool)), widgetRV, SLOT(changeWireFrame(bool)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), widgetRV, SLOT(changeScale(int)));
+        QObject::connect(ambientButton, SIGNAL(clicked()), MainWindow, SLOT(changeAmbientLight()));
+        QObject::connect(diffuseButton, SIGNAL(clicked()), MainWindow, SLOT(changeDiffuseLight()));
+        QObject::connect(specularButton, SIGNAL(clicked()), MainWindow, SLOT(changeSpecularLight()));
+        QObject::connect(xLight, SIGNAL(valueChanged(int)), MainWindow, SLOT(changeXLight()));
+        QObject::connect(yLight, SIGNAL(valueChanged(int)), MainWindow, SLOT(changeYLight()));
+        QObject::connect(zLight, SIGNAL(valueChanged(int)), MainWindow, SLOT(changeZLight()));
+        QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), MainWindow, SLOT(changeSpecCoeff(int)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -225,6 +315,11 @@ public:
         opacitySlider->setToolTip(QApplication::translate("MainWindow", "Modfie l'opacit\303\251", nullptr));
 #endif // QT_NO_TOOLTIP
         label_3->setText(QApplication::translate("MainWindow", "Taille", nullptr));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "Source Lumineuse", nullptr));
+        ambientButton->setText(QApplication::translate("MainWindow", "Couleur Ambiante", nullptr));
+        diffuseButton->setText(QApplication::translate("MainWindow", "Couleur Diffuse", nullptr));
+        specularButton->setText(QApplication::translate("MainWindow", "Couleur Sp\303\251culaire", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Coeff. R\303\251flex. Sp\303\251culaire", nullptr));
     } // retranslateUi
 
 };

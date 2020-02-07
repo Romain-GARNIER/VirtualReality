@@ -3,8 +3,8 @@
 RVDice::RVDice()
     :RVTexCube()
 {
-    m_VSFileName = ":/shaders/VS_cube_texture.vsh";
-    m_FSFileName = ":/shaders/FS_simple_texture.fsh";
+    m_VSFileName = ":/shaders/VS_lit_texture_cube.vsh";
+    m_FSFileName = ":/shaders/FS_lit_texture.fsh";
 }
 
 void RVDice::initializeBuffer()
@@ -27,6 +27,14 @@ void RVDice::initializeBuffer()
     QVector3D magenta(1, 0, 1);
     QVector3D jaune(1, 1, 0);
 
+    //Les vecteurs normaux
+    QVector3D up(0, 1, 0);
+    QVector3D down(0,-1,0);
+    QVector3D left(-1,0,0);
+    QVector3D right(1,0,0);
+    QVector3D front(0,0,-1);
+    QVector3D back(0,0,1);
+
     //On prépare le tableau des données
     QVector3D vertexData[] = {
         A, B, C, D, //face avant = 1
@@ -47,6 +55,12 @@ void RVDice::initializeBuffer()
         QVector3D(0.25f, 0.5f, 0), QVector3D(0.5f, 0.5f, 0), QVector3D(0.5f, 0.75f, 0), QVector3D(0.25f, 0.75f, 0),
         QVector3D(0, 0.75f, 0), QVector3D(0.25f, 0.75f, 0), QVector3D(0.25f, 1, 0), QVector3D(0, 1, 0),
         QVector3D(0, 0.25f, 0), QVector3D(0.25f, 0.25f, 0), QVector3D(0.25f, 0.5f, 0), QVector3D(0, 0.5f, 0),
+        back, back, back , back,
+        front, front, front, front,
+        left, left, left, left,
+        right, right, right, right,
+        up,up,up,up,
+        down,down,down,down
     };
 
     //Lien du VBO avec le contexte de rendu OpenG

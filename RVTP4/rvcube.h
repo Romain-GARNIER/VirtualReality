@@ -40,7 +40,18 @@ public:
 
     QVector3D normal(double s, double t) ;
 
+    virtual QVector3D pos(double s, double t) {
+        return QVector3D(x(s,t), y(s,t), z(s,t));
+    }
+
 protected:
+    double ds = 0.1;
+    double dt = 0.1;
+
+    virtual float x(double s, double t) = 0;
+    virtual float y(double s, double t) = 0;
+    virtual float z(double s, double t) = 0;
+
     QVector3D gradS(double s, double t);
     QVector3D gradT(double s, double t);
 

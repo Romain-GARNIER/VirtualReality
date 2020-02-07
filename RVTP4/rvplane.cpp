@@ -42,11 +42,11 @@ void RVPlane::draw()
     m_program.setUniformValue("u_color", m_globalColor);
     m_program.setUniformValue("texture0", 0);
 
-    m_program.setUniformValue("light_ambient_color", QColor(100, 100, 100));
-    m_program.setUniformValue("light_diffuse_color", QColor(255, 255, 255));
-    m_program.setUniformValue("light_specular_color", QColor(255, 255, 255));
-    m_program.setUniformValue("light_specular_strength", 20.0f);
-    m_program.setUniformValue("light_position", QVector3D(10, 0, 10));
+    m_program.setUniformValue("light_ambient_color", m_light->ambient());
+    m_program.setUniformValue("light_diffuse_color", m_light->diffuse());
+    m_program.setUniformValue("light_specular_color", m_light->specular());
+    m_program.setUniformValue("light_specular_strength", m_specStrength);
+    m_program.setUniformValue("light_position", m_light->position());
     m_program.setUniformValue("eye_position", m_camera->position());
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, m_numVertices);

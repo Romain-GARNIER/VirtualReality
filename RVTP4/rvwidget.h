@@ -76,6 +76,10 @@ public:
      */
     void resizeGL(int w, int h) override;
 
+    RVLight *light() const;
+    void setLight(RVLight *light);
+    void setSpecCoeff(float specStrength);
+
 private slots:
     /*!
      * \brief slot associé au timer. Doit gérer la mise à our des objets puis appeler la méthode update
@@ -142,5 +146,6 @@ protected:
     float m_angularVelocityZ;   //!<    Vitesse angulaire autour de l'axe z
     QPoint m_oldPos;            //!<    Position du clic souris (utilisé dans mouseMove)
     bool m_animation;           //!<    Booléen qui dit si l'animation est activée ou pas
+    RVLight *m_light;
 };
 #endif // RVWIDGET_H

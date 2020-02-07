@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QColorDialog>
 
 namespace Ui {
 class MainWindow;
@@ -13,7 +14,18 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow();    
+
+private slots:
+    void changeAmbientLight();
+    void changeSpecularLight();
+    void changeDiffuseLight();
+
+    void changeXLight();
+    void changeYLight();
+    void changeZLight();
+
+    void changeSpecCoeff(int);
 
 private:
     Ui::MainWindow *ui;
