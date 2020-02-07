@@ -45,6 +45,8 @@ void RVWidget::initializeGL()
 
     float scale = float(this->width())/this->height();
 
+    m_light = new RVLight();
+
     m_camera = new RVSphericalCamera();
     m_camera->setAspect(scale);
     m_camera->setIsOrthogonal(false);
@@ -56,9 +58,10 @@ void RVWidget::initializeGL()
 
     m_body = new RVDice();
     m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D());
+    m_body->setPosition(QVector3D(0,0,-20));
     m_body->setScale(1);
     m_body->setTexture(":/textures/dice_texture.jpg", false);
+    m_body->setLight(m_light);
     m_body->initialize();
 
     m_plane = new RVPlane();
@@ -66,6 +69,7 @@ void RVWidget::initializeGL()
     m_plane->setPosition(QVector3D(0, -10, -40));
     m_plane->setCamera(m_camera);
     m_plane->setTexture(":/textures/wood.png");
+    m_plane->setLight(m_light);
     m_plane->initialize();
 
     m_world = new RVSphere(5.0);
@@ -73,12 +77,14 @@ void RVWidget::initializeGL()
     m_world->setPosition(QVector3D(0, 6, -80));
     m_world->setTexture(":/textures/2k_earth_daymap.jpg");
 //    dynamic_cast<RVSphere*>(m_world)->setTexture2(":/textures/2k_earth_nightmap.jpg");
+    m_world->setLight(m_light);
     m_world->initialize();
 
     m_torus = new RVTorus(1.0, 8.0);
     m_torus->setCamera(m_camera);
     m_torus->setPosition(QVector3D(0, 6, -80));
     m_torus->setFS(":/shaders/FS_texture_damier.fsh");
+    m_torus->setLight(m_light);
     m_torus->initialize();
 
     m_skybox = new RVSkyBox();
@@ -93,10 +99,24 @@ void RVWidget::initializeGL()
     m_skybox->setScale(100.0);
     m_skybox->initialize();
 
+    m_rvspecube = new RVSpecularCube();
+        m_rvspecube->setCamera(m_camera);
+        m_rvspecube->setPosition(QVector3D());
+        m_rvspecube->setScale(4);
+        m_rvspecube->setCubeTexture(":/textures/skybox/left.jpg",
+                                 ":/textures/skybox/right.jpg",
+                                 ":/textures/skybox/front.jpg",
+                                 ":/textures/skybox/back.jpg",
+                                 ":/textures/skybox/top.jpg",
+                                 ":/textures/skybox/bottom.jpg");
+        m_rvspecube->setLight(m_light);
+        m_rvspecube->initialize();
+
     m_scene.append(m_body);
     m_scene.append(m_plane);
     m_scene.append(m_world);
     m_scene.append(m_torus);
+    m_scene.append(m_rvspecube);
     m_scene.setCamera(m_camera);
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -109,10 +129,6 @@ void RVWidget::paintGL()
 
     m_skybox->setPosition(m_camera->position());
       m_skybox->draw();
-//    m_body->draw();
-//    m_plane->draw();
-//    m_world->draw();
-//    m_torus->draw();
       m_scene.draw();
 }
 
@@ -224,5 +240,20 @@ void RVWidget::keyPressEvent(QKeyEvent *event)
         break;
     }
     m_camera->setPosition(camPos);
+}
+
+void RVWidget::setSpecCoeff(float specStrength)
+{
+    m_scene.setSpecStrength(specStrength);
+}
+
+RVLight *RVWidget::light() const
+{
+    return m_light;
+}
+
+void RVWidget::setLight(RVLight *light)
+{
+    m_light = light;
 }
 

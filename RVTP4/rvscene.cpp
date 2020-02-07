@@ -40,3 +40,13 @@ void RVScene::draw()
     }
 }
 
+
+void RVScene::setSpecStrength(float newSpecStrength)
+{
+    foreach (RVBody* body, *this) {
+       body->setSpecStrength(newSpecStrength);
+    }
+}
+
+
+

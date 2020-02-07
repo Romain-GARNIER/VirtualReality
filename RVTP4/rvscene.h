@@ -16,6 +16,7 @@ public:
     void setCamera(RVCamera* camera);
     void translate(QVector3D vec);
     void rotate(float, QVector3D);
+    void setSpecStrength(float SpecStrength);
     void draw();
 
 protected:

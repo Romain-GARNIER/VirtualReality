@@ -15,6 +15,8 @@
         <file>FS_skybox_texture.fsh</file>
         <file>FS_lit_texture.fsh</file>
         <file>VS_lit_texture.vsh</file>
+        <file>VS_lit_texture_cube.vsh</file>
+        <file>FS_lit_specular_cube.fsh</file>
     </qresource>
     <qresource prefix="/textures">
         <file>wood.png</file>

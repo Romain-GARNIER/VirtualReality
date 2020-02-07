@@ -28,6 +28,7 @@ SOURCES += \
     rvplane.cpp \
     rvscene.cpp \
     rvskybox.cpp \
+    rvspecularcube.cpp \
     rvsphere.cpp \
     rvsphericalcamera.cpp \
     rvsurface.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     rvplane.h \
     rvscene.h \
     rvskybox.h \
+    rvspecularcube.h \
     rvsphere.h \
     rvsphericalcamera.h \
     rvsurface.h \
@@ -59,6 +61,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    FS_lit_specular_cube.fsh \
     FS_plan.fsh \
     FS_simple.fsh \
     VS_simple.vsh \

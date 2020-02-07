@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>860</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -199,17 +199,129 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="acceptDrops">
+           <bool>false</bool>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="title">
+           <string>Source Lumineuse</string>
           </property>
-         </spacer>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QSpinBox" name="xLight">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="yLight">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="zLight">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ambientButton">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(128, 128, 128);
+border: 1px solid black;
+border-radius: 5px;</string>
+             </property>
+             <property name="text">
+              <string>Couleur Ambiante</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="diffuseButton">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(252, 253, 255);
+border: 1px solid black;
+border-radius: 5px;</string>
+             </property>
+             <property name="text">
+              <string>Couleur Diffuse</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="specularButton">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 127);
+border: 1px solid black;
+border-radius: 5px;</string>
+             </property>
+             <property name="text">
+              <string>Couleur Spéculaire</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Coeff. Réflex. Spéculaire</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="horizontalSlider_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>75</number>
+             </property>
+             <property name="value">
+              <number>15</number>
+             </property>
+             <property name="sliderPosition">
+              <number>15</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </item>
@@ -222,8 +334,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>22</height>
+     <width>860</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -271,8 +383,8 @@
    <slot>changeFov(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>742</x>
-     <y>157</y>
+     <x>802</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
@@ -287,8 +399,8 @@
    <slot>changeOpacity(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>765</x>
-     <y>384</y>
+     <x>819</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
      <x>372</x>
@@ -303,8 +415,8 @@
    <slot>changeWireFrame(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>774</x>
-     <y>306</y>
+     <x>819</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>572</x>
@@ -319,8 +431,8 @@
    <slot>changeScale(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>769</x>
-     <y>440</y>
+     <x>838</x>
+     <y>478</y>
     </hint>
     <hint type="destinationlabel">
      <x>590</x>
@@ -328,5 +440,126 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ambientButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeAmbientLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>838</x>
+     <y>622</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>566</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>diffuseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeDiffuseLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>838</x>
+     <y>646</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>567</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>specularButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeSpecularLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>838</x>
+     <y>670</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>771</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>xLight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeXLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>745</x>
+     <y>542</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>666</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>yLight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeYLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>745</x>
+     <y>570</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>666</x>
+     <y>431</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zLight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeZLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>745</x>
+     <y>598</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>666</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeSpecCoeff(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>838</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>648</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>changeAmbientLight()</slot>
+  <slot>changeDiffuseLight()</slot>
+  <slot>changeSpecularLight()</slot>
+  <slot>changeXLight()</slot>
+  <slot>changeYLight()</slot>
+  <slot>changeZLight()</slot>
+  <slot>changeSpecCoeff(int)</slot>
+ </slots>
 </ui>
