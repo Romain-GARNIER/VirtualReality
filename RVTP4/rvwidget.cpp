@@ -58,7 +58,7 @@ void RVWidget::initializeGL()
 
     m_body = new RVDice();
     m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D());
+    m_body->setPosition(QVector3D(0,0,-20));
     m_body->setScale(1);
     m_body->setTexture(":/textures/dice_texture.jpg", false);
     m_body->setLight(m_light);
@@ -99,10 +99,24 @@ void RVWidget::initializeGL()
     m_skybox->setScale(100.0);
     m_skybox->initialize();
 
+    m_rvspecube = new RVSpecularCube();
+        m_rvspecube->setCamera(m_camera);
+        m_rvspecube->setPosition(QVector3D());
+        m_rvspecube->setScale(4);
+        m_rvspecube->setCubeTexture(":/textures/skybox/left.jpg",
+                                 ":/textures/skybox/right.jpg",
+                                 ":/textures/skybox/front.jpg",
+                                 ":/textures/skybox/back.jpg",
+                                 ":/textures/skybox/top.jpg",
+                                 ":/textures/skybox/bottom.jpg");
+        m_rvspecube->setLight(m_light);
+        m_rvspecube->initialize();
+
     m_scene.append(m_body);
     m_scene.append(m_plane);
     m_scene.append(m_world);
     m_scene.append(m_torus);
+    m_scene.append(m_rvspecube);
     m_scene.setCamera(m_camera);
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -115,10 +129,6 @@ void RVWidget::paintGL()
 
     m_skybox->setPosition(m_camera->position());
       m_skybox->draw();
-//    m_body->draw();
-//    m_plane->draw();
-//    m_world->draw();
-//    m_torus->draw();
       m_scene.draw();
 }
 

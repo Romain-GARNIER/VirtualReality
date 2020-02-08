@@ -16,25 +16,6 @@
         <file>FS_lit_texture.fsh</file>
         <file>VS_lit_texture.vsh</file>
         <file>VS_lit_texture_cube.vsh</file>
-    </qresource>
-    <qresource prefix="/textures">
-        <file>wood.png</file>
-        <file>2k_earth_nightmap.jpg</file>
-        <file>polytech_logo.jpg</file>
-        <file>2k_earth_daymap.jpg</file>
-        <file>container.jpg</file>
-        <file>dice_texture.jpg</file>
-        <file>skybox/bottom.jpg</file>
-        <file>skybox/front.jpg</file>
-        <file>skybox/left.jpg</file>
-        <file>skybox/right.jpg</file>
-        <file>skybox/top.jpg</file>
-        <file>skybox/back.jpg</file>
-        <file>space/up.jpg</file>
-        <file>space/back.jpg</file>
-        <file>space/bottom.jpg</file>
-        <file>space/front.jpg</file>
-        <file>space/left.jpg</file>
-        <file>space/right.jpg</file>
+        <file>FS_lit_specular_cube.fsh</file>
     </qresource>
 </RCC>

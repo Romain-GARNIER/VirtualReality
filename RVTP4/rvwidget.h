@@ -31,6 +31,7 @@
 #include "rvscene.h"
 #include "rvskybox.h"
 #include "rvsphericalcamera.h"
+#include "rvspecularcube.h"
 
 /*!
  * \brief The RVWidget class est un widget ViewControlleur pour tous nos programmes.
@@ -147,5 +148,6 @@ protected:
     QPoint m_oldPos;            //!<    Position du clic souris (utilisé dans mouseMove)
     bool m_animation;           //!<    Booléen qui dit si l'animation est activée ou pas
     RVLight *m_light;
+    RVSpecularCube  *m_rvspecube;
 };
 #endif // RVWIDGET_H
