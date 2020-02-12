@@ -60,8 +60,9 @@ void RVWidget::initializeGL()
     static_cast<RVSphericalCamera*>(m_camera)->setRho(60);
 
     m_light = new RVLight();
+    m_light->setPosition(QVector3D(-10,20,20));
 
-    m_trajectory = new RVBounce(5.0,5);
+    m_trajectory = new RVBounce(10.0,5);
     m_trajectory->setCamera(m_camera);
     m_trajectory->setPosition(QVector3D(0, 6, -8));
     m_trajectory->setScale(1);
@@ -69,7 +70,7 @@ void RVWidget::initializeGL()
 
     m_body = new RVDice();
     m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D());
+    m_body->setPosition(QVector3D(0,10,10));
     m_body->setScale(5);
     m_body->setTexture(":/textures/dice_texture.jpg", false);
     m_body->setLight(m_light);
@@ -77,7 +78,7 @@ void RVWidget::initializeGL()
 
     m_plane = new RVPlane();
     m_plane->setScale(3);
-    m_plane->setPosition(QVector3D(0, -10, 0));
+    m_plane->setPosition(QVector3D(0, -5, 0));
     m_plane->setCamera(m_camera);
     m_plane->setTexture(":/textures/wood.png");
     m_plane->setLight(m_light);

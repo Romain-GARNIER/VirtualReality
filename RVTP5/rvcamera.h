@@ -44,13 +44,13 @@ public:
      * \brief renvoie la matrice de vue.
      * \return une instance de QMatrix4x4 qui permet de passer du repère de la scène au repère de la vue.
      */
-    QMatrix4x4 viewMatrix();
+    virtual QMatrix4x4 viewMatrix();
 
     /*!
      * \brief renvoie la matrice de projection
      * \return une instance de QMatric4x4 qui permet de passer du repère de vue au repère normalisé de projection
      */
-    QMatrix4x4 projectionMatrix();
+    virtual QMatrix4x4 projectionMatrix();
 
     /*!
      * \brief renvoie la position du point focal de la caméra.

@@ -27,7 +27,7 @@ RVBounce::RVBounce(double hMax, double tMax)
 
 float RVBounce::x(double t)
 {
-    return 0;
+    return position().x();
 }
 
 float RVBounce::y(double t)
@@ -39,5 +39,5 @@ float RVBounce::y(double t)
 
 float RVBounce::z(double t)
 {
-    return 0;
+    return position().z();
 }
