@@ -2,9 +2,9 @@
 #define RVSPHERICALCAMERA_H
 
 #include <QtMath>
-#include "rvcamera.h"
+#include "rvstereocamera.h"
 
-class RVSphericalCamera : public RVCamera
+class RVSphericalCamera : public RVStereoCamera
 {
 public:
     RVSphericalCamera();

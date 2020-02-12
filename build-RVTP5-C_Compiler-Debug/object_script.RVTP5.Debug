@@ -3,6 +3,7 @@ debug/mainwindow.o
 debug/rvbody.o
 debug/rvbounce.o
 debug/rvcamera.o
+debug/rvcircle.o
 debug/rvcurve.o
 debug/rvdice.o
 debug/rvhelix.o
@@ -12,6 +13,7 @@ debug/rvscene.o
 debug/rvskybox.o
 debug/rvsphere.o
 debug/rvsphericalcamera.o
+debug/rvstereocamera.o
 debug/rvsurface.o
 debug/rvtexcube.o
 debug/rvtorus.o

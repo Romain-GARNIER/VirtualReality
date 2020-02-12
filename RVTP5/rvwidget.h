@@ -131,7 +131,7 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 protected:
-    RVCamera *m_camera;         //!<    Pointeur sur la caméra à utiliser lors du rendu
+    RVStereoCamera *m_camera;         //!<    Pointeur sur la caméra à utiliser lors du rendu
     RVScene  m_scene;           //!<    La scène contient tous les objets
     RVBody   *m_body;           //!<    Objet montré dans le widget
     RVBody   *m_plane;          //!<    Plan horizontal

@@ -3,6 +3,7 @@ release/mainwindow.o
 release/rvbody.o
 release/rvbounce.o
 release/rvcamera.o
+release/rvcircle.o
 release/rvcurve.o
 release/rvdice.o
 release/rvhelix.o
@@ -12,6 +13,7 @@ release/rvscene.o
 release/rvskybox.o
 release/rvsphere.o
 release/rvsphericalcamera.o
+release/rvstereocamera.o
 release/rvsurface.o
 release/rvtexcube.o
 release/rvtorus.o

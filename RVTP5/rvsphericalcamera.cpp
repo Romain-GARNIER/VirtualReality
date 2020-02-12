@@ -1,7 +1,7 @@
 #include "rvsphericalcamera.h"
 
 RVSphericalCamera::RVSphericalCamera()
-    :RVCamera(), m_rho(10), m_phi(0), m_theta(0)
+    :RVStereoCamera(), m_rho(10), m_phi(0), m_theta(0)
 {
     updatePosition();
 }

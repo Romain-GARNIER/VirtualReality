@@ -22,6 +22,7 @@ SOURCES += \
     rvbody.cpp \
     rvbounce.cpp \
     rvcamera.cpp \
+    rvcircle.cpp \
     rvcurve.cpp \
     rvdice.cpp \
     rvhelix.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     rvbody.h \
     rvbounce.h \
     rvcamera.h \
+    rvcircle.h \
     rvcurve.h \
     rvdice.h \
     rvhelix.h \
@@ -50,6 +52,7 @@ HEADERS += \
     rvscene.h \
     rvskybox.h \
     rvsphere.h \
+    rvsphericalcamera.h \
     rvstereocamera.h \
     rvsurface.h \
     rvtexcube.h \

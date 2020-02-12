@@ -6,7 +6,7 @@ RVCurve::RVCurve()
     m_minT = 0;
     m_maxT = 1;
     m_numSeg = 100;
-    m_lineWidth = 2;
+    m_lineWidth = 3;
 }
 
 void RVCurve::draw()

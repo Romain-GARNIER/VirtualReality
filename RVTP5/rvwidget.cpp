@@ -12,6 +12,7 @@
 
 #include "rvhelix.h"
 #include "rvbounce.h"
+#include "rvcircle.h"
 
 RVWidget::RVWidget(QWidget *parent)
     : QOpenGLWidget(parent), QOpenGLFunctions()
@@ -62,7 +63,7 @@ void RVWidget::initializeGL()
     m_light = new RVLight();
     m_light->setPosition(QVector3D(-10,20,20));
 
-    m_trajectory = new RVBounce(10.0,5);
+    m_trajectory = new RVCircle(10,5);
     m_trajectory->setCamera(m_camera);
     m_trajectory->setPosition(QVector3D(0, 6, -8));
     m_trajectory->setScale(1);
@@ -128,8 +129,18 @@ void RVWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_skybox->setPosition(m_camera->position());
-      m_skybox->draw();
-      m_scene.draw();
+    m_skybox->draw();
+
+    glColorMask(true, false, false, false);
+    m_camera->setCameraType(RV_CAMERA_LEFT);
+    m_scene.draw();
+
+    glClear(GL_DEPTH_BUFFER_BIT) ;
+    glColorMask(true, true, false, false);
+    m_camera->setCameraType(RV_CAMERA_RIGHT);
+    m_scene.draw();
+
+    glColorMask(true, true, true, true);
 }
 
 void RVWidget::resizeGL(int w, int h)

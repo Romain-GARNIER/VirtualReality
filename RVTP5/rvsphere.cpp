@@ -53,7 +53,8 @@ void RVSphere::setRadius(double radius)
 }
 
 void RVSphere::update(float time){
-
+    int vitAngulaire = 1; //en degré par seconde
     setPosition(m_trajectory->pos(time*0.001));
+    this->rotate(vitAngulaire, QVector3D(0, 1, 0));
 }
 
