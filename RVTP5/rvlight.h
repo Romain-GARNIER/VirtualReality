@@ -32,6 +32,8 @@ public:
     QColor specular() const;
     void setSpecular(const QColor &specular);
 
+    void update(float time);
+
 private:
     QVector3D m_position;
     QColor m_ambient;

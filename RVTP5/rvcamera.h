@@ -148,6 +148,8 @@ public:
      */
     void setIsOrthogonal(bool isOrthogonal);
 
+    void update(float time);
+
 protected:
     QVector3D m_position;   //!< la position (centre focale) de la camera - (0, 0, 0) par défaut.
     QVector3D m_target;     //!< la position de la cible de la camera - (0, 0, -1) par défaut.

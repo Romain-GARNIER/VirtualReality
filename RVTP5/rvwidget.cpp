@@ -35,7 +35,7 @@ RVWidget::~RVWidget()
     delete m_camera;
     delete m_body;
     delete m_plane;
-    delete m_world;
+    delete m_sun;
     delete m_torus;
     delete m_skybox;
     delete m_timer;
@@ -63,11 +63,29 @@ void RVWidget::initializeGL()
     m_light = new RVLight();
     m_light->setPosition(QVector3D(-10,20,20));
 
-    m_trajectory = new RVCircle(10,5);
-    m_trajectory->setCamera(m_camera);
-    m_trajectory->setPosition(QVector3D(0, 6, -8));
-    m_trajectory->setScale(1);
-    m_trajectory->initialize();
+    RVCircle *sunTrajectory = new RVCircle(0,1);
+    sunTrajectory->setCamera(m_camera);
+    sunTrajectory->setPosition(QVector3D(0, 0, 0));
+    sunTrajectory->setScale(1);
+    sunTrajectory->initialize();
+
+    RVCircle *mercuryTrajectory = new RVCircle(15,7);
+    mercuryTrajectory->setCamera(m_camera);
+    mercuryTrajectory->setPosition(QVector3D(0, 0, 0));
+    mercuryTrajectory->setScale(1);
+    mercuryTrajectory->initialize();
+
+    RVCircle *venusTrajectory = new RVCircle(35,10);
+    venusTrajectory->setCamera(m_camera);
+    venusTrajectory->setPosition(QVector3D(0, 0, 0));
+    venusTrajectory->setScale(1);
+    venusTrajectory->initialize();
+
+    RVCircle *earthTrajectory = new RVCircle(50,20);
+    earthTrajectory->setCamera(m_camera);
+    earthTrajectory->setPosition(QVector3D(0, 0, 0));
+    earthTrajectory->setScale(1);
+    earthTrajectory->initialize();
 
 //    m_body = new RVDice();
 //    m_body->setCamera(m_camera);
@@ -85,13 +103,37 @@ void RVWidget::initializeGL()
 //    m_plane->setLight(m_light);
 //    m_plane->initialize();
 
-    m_world = new RVSphere(5.0);
-    m_world->setCamera(m_camera);
-    m_world->setPosition(QVector3D(0, 6, -8));
-    m_world->setTexture(":/textures/2k_earth_daymap.jpg");
-    m_world->setLight(m_light);
-    m_world->setTrajectory(m_trajectory);
-    m_world->initialize();
+    m_sun = new RVSphere(10.0);
+    m_sun->setCamera(m_camera);
+    m_sun->setPosition(QVector3D(0, 0, 0));
+    m_sun->setTexture(":/textures/2k_sun.jpg");
+    m_sun->setLight(m_light);
+    m_sun->setTrajectory(sunTrajectory);
+    m_sun->initialize();
+
+    m_mercury = new RVSphere(1.0);
+    m_mercury->setCamera(m_camera);
+    m_mercury->setPosition(QVector3D(0, 0, -15));
+    m_mercury->setTexture(":/textures/2k_mercury.jpg");
+    m_mercury->setLight(m_light);
+    m_mercury->setTrajectory(mercuryTrajectory);
+    m_mercury->initialize();
+
+    m_venus = new RVSphere(2.0);
+    m_venus->setCamera(m_camera);
+    m_venus->setPosition(QVector3D(0, 0, 35));
+    m_venus->setTexture(":/textures/2k_venus_atmosphere.jpg");
+    m_venus->setLight(m_light);
+    m_venus->setTrajectory(venusTrajectory);
+    m_venus->initialize();
+
+    m_earth = new RVSphere(2.0);
+    m_earth->setCamera(m_camera);
+    m_earth->setPosition(QVector3D(0, 0, 50));
+    m_earth->setTexture(":/textures/2k_earth_daymap.jpg");
+    m_earth->setLight(m_light);
+    m_earth->setTrajectory(earthTrajectory);
+    m_earth->initialize();
 
     m_torus = new RVTorus(1.0, 10.0);
     m_torus->setCamera(m_camera);
@@ -103,22 +145,28 @@ void RVWidget::initializeGL()
     m_skybox = new RVSkyBox();
     m_skybox->setCamera(m_camera);
     m_skybox->setPosition(QVector3D());
-    m_skybox->setCubeTexture(":/textures/skybox/left.jpg",
-                             ":/textures/skybox/right.jpg",
-                             ":/textures/skybox/front.jpg",
-                             ":/textures/skybox/back.jpg",
-                             ":/textures/skybox/top.jpg",
-                             ":/textures/skybox/bottom.jpg");
+    m_skybox->setCubeTexture(":/textures/stars.jpg",      //left
+                             ":/textures/stars.jpg",     //right
+                             ":/textures/stars.jpg",     //front
+                             ":/textures/stars.jpg",         //back
+                             ":/textures/stars.jpg",         //top
+                             ":/textures/stars.jpg");   //bottom
     m_skybox->setScale(100.0);
     m_skybox->initialize();
 
 //    m_scene.append(m_body);
 //    m_scene.append(m_plane);
-    m_scene.append(m_world);
+    m_scene.append(m_sun);
+    m_scene.append(m_mercury);
+    m_scene.append(m_venus);
+    m_scene.append(m_earth);
 //    m_scene.append(m_torus);
     m_scene.setCamera(m_camera);
 
-    m_scene.append(m_trajectory);
+    m_scene.append(sunTrajectory);
+    m_scene.append(mercuryTrajectory);
+    m_scene.append(venusTrajectory);
+    m_scene.append(earthTrajectory);
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer->start(10);
@@ -140,7 +188,7 @@ void RVWidget::paintGL()
     m_camera->setCameraType(RV_CAMERA_RIGHT);
     m_scene.draw();
 
-    glColorMask(true, true, true, true);
+    glClearColor(0.0f, 0.566f, 0.867f, 1.0f);
 }
 
 void RVWidget::resizeGL(int w, int h)
@@ -157,8 +205,11 @@ void RVWidget::update()
     int t = m_time.elapsed();
 
    if (m_animation) {
-       m_scene.update(float(t));
+//       m_scene.update(float(t));
+       m_camera->update(t);
+       m_light->update(t);
    }
+
     QOpenGLWidget::update();
 }
 
@@ -178,12 +229,12 @@ void RVWidget::changeOpacity(int newOpacity)
 {
     //m_body->setOpacity(newOpacity * 0.01f);
     m_plane->setOpacity(newOpacity * 0.01f);
-    m_world->setOpacity(newOpacity * 0.01f);
+    m_sun->setOpacity(newOpacity * 0.01f);
 }
 
 void RVWidget::changeWireFrame(bool b)
 {
-    m_world->setWireFrame(b);
+    m_sun->setWireFrame(b);
 }
 
 void RVWidget::changeCulling(bool b)
@@ -193,7 +244,7 @@ void RVWidget::changeCulling(bool b)
 
 void RVWidget::changeScale(int s)
 {
-    m_world->setScale(s*0.01f);
+    m_sun->setScale(s*0.01f);
 }
 
 void RVWidget::changeSaturation(int s)

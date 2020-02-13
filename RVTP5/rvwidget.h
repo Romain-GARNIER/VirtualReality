@@ -135,7 +135,7 @@ protected:
     RVScene  m_scene;           //!<    La scène contient tous les objets
     RVBody   *m_body;           //!<    Objet montré dans le widget
     RVBody   *m_plane;          //!<    Plan horizontal
-    RVSphere   *m_world;          //!<    Sphère terrestre
+    RVSphere   *m_sun;          //!<    soleil
     RVBody   *m_torus;          //!<    Tore à carreaux
     RVSkyBox *m_skybox;         //!<    Skybox
     QTimer* m_timer;            //!<    Timer utilisé lors de l'animation
@@ -147,5 +147,13 @@ protected:
     RVLight * m_light;
     QTime m_time;
     RVCurve *m_trajectory;
+    RVSphere   *m_mercury;
+    RVSphere   *m_venus;
+    RVSphere   *m_earth;
+    RVSphere   *m_mars;
+    RVSphere   *m_jupiter;
+    RVSphere   *m_saturn;
+    RVSphere   *m_uranus;
+    RVSphere   *m_neptune;
 };
 #endif // RVWIDGET_H

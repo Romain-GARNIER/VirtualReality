@@ -1,4 +1,5 @@
 #include "rvlight.h"
+#include <QtMath>
 
 RVLight::RVLight()
 {
@@ -46,4 +47,35 @@ QColor RVLight::specular() const
 void RVLight::setSpecular(const QColor &specular)
 {
     m_specular = specular;
+}
+
+void RVLight::update(float time){
+    float x, y, z, t;
+
+    //Bounce
+//    float hMax, tMax, a, b;
+
+//    hMax = 20;
+//    tMax = 10;
+//    a = -2*(hMax)/tMax;
+//    b = 2*hMax;
+
+//    t = fmod(time*0.001,tMax);
+
+//    x = position().x();
+//    y = float(a*pow(t,2) + b*t);
+//    z = position().y();
+
+    //Cirlce
+    float m_rayon = 100;
+    float m_periode = 10;
+    float m_omega = (2 * M_PI) / m_periode;
+
+    time = time*0.001;
+
+    x = m_rayon * qCos(m_omega * time);
+    y = m_rayon * qSin(m_omega * time);
+    z = m_rayon * qSin(m_omega * time);
+
+    setPosition(QVector3D(x,y,z));
 }

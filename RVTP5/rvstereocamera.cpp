@@ -5,7 +5,7 @@ RVStereoCamera::RVStereoCamera()
     :RVCamera()
 {
     m_eyeDistance = 4;
-    m_focalDistance = 200;
+    m_focalDistance = 100;
     m_cameraType = RV_CAMERA_MONO;
 }
 

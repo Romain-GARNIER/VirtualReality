@@ -10,6 +10,7 @@
 */
 
 #include "rvcamera.h"
+#include <QtMath>
 
 RVCamera::RVCamera()
 {
@@ -121,3 +122,20 @@ void RVCamera::setIsOrthogonal(bool isOrthogonal)
 {
     m_isOrthogonal = isOrthogonal;
 }
+
+void RVCamera::update(float time){
+    float x, y, z;
+
+    float m_rayon = 100;
+    float m_periode = 120;
+    float m_omega = (2 * M_PI) / m_periode;
+
+    time = time*0.001;
+
+    x = m_rayon * qCos(m_omega * time);
+    y = m_rayon * qSin(m_omega * time);
+    z = m_rayon * qSin(m_omega * time);
+
+    setPosition(QVector3D(x,y,z));
+}
+
