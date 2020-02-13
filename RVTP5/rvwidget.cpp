@@ -69,21 +69,21 @@ void RVWidget::initializeGL()
     m_trajectory->setScale(1);
     m_trajectory->initialize();
 
-    m_body = new RVDice();
-    m_body->setCamera(m_camera);
-    m_body->setPosition(QVector3D(0,10,10));
-    m_body->setScale(5);
-    m_body->setTexture(":/textures/dice_texture.jpg", false);
-    m_body->setLight(m_light);
-    m_body->initialize();
+//    m_body = new RVDice();
+//    m_body->setCamera(m_camera);
+//    m_body->setPosition(QVector3D(0,10,10));
+//    m_body->setScale(5);
+//    m_body->setTexture(":/textures/dice_texture.jpg", false);
+//    m_body->setLight(m_light);
+//    m_body->initialize();
 
-    m_plane = new RVPlane();
-    m_plane->setScale(3);
-    m_plane->setPosition(QVector3D(0, -5, 0));
-    m_plane->setCamera(m_camera);
-    m_plane->setTexture(":/textures/wood.png");
-    m_plane->setLight(m_light);
-    m_plane->initialize();
+//    m_plane = new RVPlane();
+//    m_plane->setScale(3);
+//    m_plane->setPosition(QVector3D(0, -5, 0));
+//    m_plane->setCamera(m_camera);
+//    m_plane->setTexture(":/textures/wood.png");
+//    m_plane->setLight(m_light);
+//    m_plane->initialize();
 
     m_world = new RVSphere(5.0);
     m_world->setCamera(m_camera);
@@ -112,10 +112,10 @@ void RVWidget::initializeGL()
     m_skybox->setScale(100.0);
     m_skybox->initialize();
 
-    m_scene.append(m_body);
-    m_scene.append(m_plane);
+//    m_scene.append(m_body);
+//    m_scene.append(m_plane);
     m_scene.append(m_world);
-    m_scene.append(m_torus);
+//    m_scene.append(m_torus);
     m_scene.setCamera(m_camera);
 
     m_scene.append(m_trajectory);
