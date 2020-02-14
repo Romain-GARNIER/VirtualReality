@@ -146,7 +146,8 @@ protected:
     bool m_animation;           //!<    Booléen qui dit si l'animation est activée ou pas
     RVLight * m_light;
     QTime m_time;
-    RVCurve *m_trajectory;
+    RVCurve *m_cameraTrajectory;
+    RVCurve *m_lightTrajectory;
     RVSphere   *m_mercury;
     RVSphere   *m_venus;
     RVSphere   *m_earth;

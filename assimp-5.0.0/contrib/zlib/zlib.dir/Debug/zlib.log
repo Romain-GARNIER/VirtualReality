@@ -1,0 +1,18 @@
+﻿  Building Custom Rule C:/Users/garni/Documents/GitHub/VirtualReality/assimp-5.0.0/contrib/zlib/CMakeLists.txt
+  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  gzclose.c
+  gzlib.c
+  gzread.c
+  gzwrite.c
+  inflate.c
+  infback.c
+  inftrees.c
+  inffast.c
+  trees.c
+  uncompr.c
+  zutil.c
+     Création de la bibliothèque C:/Users/garni/Documents/GitHub/VirtualReality/assimp-5.0.0/lib/Debug/zlibd.lib et de l'objet C:/Users/garni/Documents/GitHub/VirtualReality/assimp-5.0.0/lib/Debug/zlibd.exp
+  zlib.vcxproj -> C:\Users\garni\Documents\GitHub\VirtualReality\assimp-5.0.0\bin\Debug\zlibd.dll

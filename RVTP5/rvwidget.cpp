@@ -63,6 +63,18 @@ void RVWidget::initializeGL()
     m_light = new RVLight();
     m_light->setPosition(QVector3D(-10,20,20));
 
+    m_cameraTrajectory = new RVCircle(100,120);
+    m_cameraTrajectory->setCamera(m_camera);
+    m_cameraTrajectory->setPosition(QVector3D(0, 0, 0));
+    m_cameraTrajectory->setScale(1);
+    m_cameraTrajectory->initialize();
+
+    m_lightTrajectory = new RVCircle(100,30);
+    m_lightTrajectory->setCamera(m_camera);
+    m_lightTrajectory->setPosition(QVector3D(0, 0, 0));
+    m_lightTrajectory->setScale(1);
+    m_lightTrajectory->initialize();
+
     RVCircle *sunTrajectory = new RVCircle(0,1);
     sunTrajectory->setCamera(m_camera);
     sunTrajectory->setPosition(QVector3D(0, 0, 0));
@@ -163,6 +175,8 @@ void RVWidget::initializeGL()
 //    m_scene.append(m_torus);
     m_scene.setCamera(m_camera);
 
+    m_scene.append(m_cameraTrajectory);
+    m_scene.append(m_lightTrajectory);
     m_scene.append(sunTrajectory);
     m_scene.append(mercuryTrajectory);
     m_scene.append(venusTrajectory);
@@ -188,7 +202,7 @@ void RVWidget::paintGL()
     m_camera->setCameraType(RV_CAMERA_RIGHT);
     m_scene.draw();
 
-    glClearColor(0.0f, 0.566f, 0.867f, 1.0f);
+    glColorMask(true, true, true, true);
 }
 
 void RVWidget::resizeGL(int w, int h)
@@ -206,8 +220,8 @@ void RVWidget::update()
 
    if (m_animation) {
 //       m_scene.update(float(t));
-       m_camera->update(t);
-       m_light->update(t);
+       m_camera->setPosition(m_cameraTrajectory->pos(t*0.001));
+       m_light->setPosition(m_lightTrajectory->pos(t*0.001));
    }
 
     QOpenGLWidget::update();

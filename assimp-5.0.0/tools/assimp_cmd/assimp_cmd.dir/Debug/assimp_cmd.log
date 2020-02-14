@@ -1,0 +1,8 @@
+﻿  Building Custom Rule C:/Users/garni/Documents/GitHub/VirtualReality/assimp-5.0.0/tools/assimp_cmd/CMakeLists.txt
+  CompareDump.cpp
+  ImageExtractor.cpp
+  Main.cpp
+  WriteDumb.cpp
+  Info.cpp
+  Export.cpp
+  assimp_cmd.vcxproj -> C:\Users\garni\Documents\GitHub\VirtualReality\assimp-5.0.0\bin\Debug\assimpd.exe
