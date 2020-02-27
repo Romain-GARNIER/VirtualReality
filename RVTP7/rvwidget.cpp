@@ -29,6 +29,7 @@ RVWidget::~RVWidget()
 {
     makeCurrent();
     delete m_camera;
+    delete m_camera2;
     delete m_batiment;
     delete m_sphere;
     delete m_torus;
@@ -54,24 +55,32 @@ void RVWidget::initializeGL()
     m_camera->setZMax(500);
     static_cast<RVSphericalCamera*>(m_camera)->setRho(70);
 
+    m_camera2 = new RVSubjectiveCamera();
+    m_camera2->setZMax(2000);
+    m_camera2->setPosition(QVector3D(0,50,-100));
+    m_camera2->setFov(45);
+
     m_light = new RVLight();
     m_light->setAmbient(QColor(80, 80, 80));
     m_light->setPosition(QVector3D(0, 150, -100));
 
     m_batiment = new RVModel("/Users/garni/Documents/GitHub/VirtualReality/RVTuto7/model/IUT_INFO.X");
-    m_batiment->setCamera(m_camera);
     m_batiment->setLight(m_light);
     m_batiment->initialize();
 
+    m_bb8 = new RVBB8();
+    m_bb8->setPosition(QVector3D(0, 0, -100));
+    m_bb8->setLight(m_light);
+    m_bb8->setScale(0.4f);
+    m_bb8->initialize();
+
     m_sphere = new RVSphere(5.0);
-    m_sphere->setCamera(m_camera);
     m_sphere->setPosition(QVector3D(0, 50, -100));
     m_sphere->setTexture(":/textures/wood.png");
     m_sphere->setLight(m_light);
     m_sphere->initialize();
 
     m_torus = new RVTorus(1.0, 10.0);
-    m_torus->setCamera(m_camera);
     m_torus->setPosition(QVector3D(200, 50, -100));
     m_torus->setFS(":/shaders/FS_lit_damier.fsh");
     m_torus->setLight(m_light);
@@ -80,6 +89,7 @@ void RVWidget::initializeGL()
     m_scene.append(m_batiment);
     m_scene.append(m_sphere);
     m_scene.append(m_torus);
+    m_scene.append(m_bb8);
     m_scene.setCamera(m_camera);
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -93,12 +103,12 @@ void RVWidget::paintGL()
 
     //début du code OpenGL
     p.beginNativePainting();
-        glEnable(GL_DEPTH_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_camera->setCameraType(RV_CAMERA_MONO);
-        m_scene.draw();
-        glDisable(GL_DEPTH_TEST);
+    m_camera->setCameraType(RV_CAMERA_MONO);
+    m_scene.draw();
+    glDisable(GL_DEPTH_TEST);
     p.endNativePainting();
     //fin du code OpenGL
 
@@ -194,6 +204,9 @@ void RVWidget::mouseMoveEvent(QMouseEvent *event)
     static_cast<RVSphericalCamera*>(m_camera)->setPhi(oldPhi+qDegreesToRadians(angleX));
     static_cast<RVSphericalCamera*>(m_camera)->setTheta(oldTheta+qDegreesToRadians(angleY));
 
+    m_camera2->tilt(dy);
+    m_camera2->turn(dx);
+
     m_oldPos = event->pos();
 
     update();
@@ -207,17 +220,17 @@ void RVWidget::keyPressEvent(QKeyEvent *event)
     float deltaY = 0.2f;
     switch (event->key())
     {
-    case Qt::Key_Left:
-        camPos.setX(camPos.x() - deltaX);
+    case Qt::Key_Z:
+        m_camera2->move(10);
         break;
-    case Qt::Key_Right:
-        camPos.setX(camPos.x() + deltaX);
+    case Qt::Key_S:
+        m_camera2->move(-10);
         break;
-    case Qt::Key_Up:
-        camPos.setY(camPos.y() + deltaY);
+    case Qt::Key_D:
+        m_camera2->lateral(10);
         break;
-    case Qt::Key_Down:
-        camPos.setY(camPos.y() - deltaY);
+    case Qt::Key_Q:
+        m_camera2->lateral(-10);
         break;
     }
     m_camera->setPosition(camPos);
