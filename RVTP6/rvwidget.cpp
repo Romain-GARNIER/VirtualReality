@@ -10,6 +10,8 @@
 */
 #include "rvwidget.h"
 
+#include "rvterrain.h"
+
 RVWidget::RVWidget(QWidget *parent)
     : QOpenGLWidget(parent), QOpenGLFunctions()
 {
@@ -50,14 +52,14 @@ void RVWidget::initializeGL()
     m_camera = new RVSphericalCamera();
     m_camera->setAspect(scale);
     m_camera->setIsOrthogonal(false);
-    m_camera->setTarget(QVector3D(0, 0, 0));
     m_camera->setZMin(2);
     m_camera->setZMax(500);
     static_cast<RVSphericalCamera*>(m_camera)->setRho(60);
+    static_cast<RVSphericalCamera*>(m_camera)->setTheta(1.57);
 
     m_light = new RVLight();
 
-    m_body = new RVModel("C:\\Users\\garni\\Documents\\GitHub\\VirtualReality\\RVTuto6\\model\\GeeBee2.x");//RVDice();
+    m_body = new RVAirplane();
     m_body->setCamera(m_camera);
     m_body->setPosition(QVector3D());
     //m_body->setScale(5);
@@ -65,11 +67,11 @@ void RVWidget::initializeGL()
     m_body->setLight(m_light);
     m_body->initialize();
 
-    m_plane = new RVPlane();
-    m_plane->setScale(3);
+    m_plane = new RVTerrain(10000);
+    m_plane->setScale(1);
     m_plane->setPosition(QVector3D(0, -10, 0));
     m_plane->setCamera(m_camera);
-    m_plane->setTexture(":/textures/wood.png");
+    m_plane->setTexture(":/textures/heigthmap.jpg");
     m_plane->setLight(m_light);
     m_plane->initialize();
 
@@ -107,6 +109,9 @@ void RVWidget::initializeGL()
     static_cast<RVHelix*>(m_trajectory)->setPitch(1);
     static_cast<RVHelix*>(m_trajectory)->setNumWindings(5);
     m_trajectory->initialize();
+
+
+    m_camera->setTarget(m_body->position());
 
     m_scene.append(m_body);
     m_scene.append(m_plane);
@@ -167,7 +172,10 @@ void RVWidget::update()
         m_world->setPosition(m_trajectory->pos(t*0.001));
     }
 
-    QOpenGLWidget::update();
+    QOpenGLWidget::update();    
+
+    m_camera->setTarget(m_body->position());
+    m_camera->setTarget(m_body->position());
 }
 
 void RVWidget::startAnimation()
@@ -244,19 +252,49 @@ void RVWidget::keyPressEvent(QKeyEvent *event)
     QVector3D camPos = m_camera->position();
     float deltaX = 0.2f;
     float deltaY = 0.2f;
+    float lacet = static_cast<RVAirplane*>(m_body)->lacet();
+    float tangage = static_cast<RVAirplane*>(m_body)->tangage();
+    float roulis = static_cast<RVAirplane*>(m_body)->roulis();
+    float roulisLimit = 50;
+    float theta = static_cast<RVSphericalCamera*>(m_camera)->theta();
+    float phi = static_cast<RVSphericalCamera*>(m_camera)->phi();
     switch (event->key())
     {
     case Qt::Key_Left:
-        camPos.setX(camPos.x() - deltaX);
+//        camPos.setX(camPos.x() - deltaX);
+        if(roulis < roulisLimit)
+            static_cast<RVAirplane*>(m_body)->setRoulis(roulis+1);
+        static_cast<RVAirplane*>(m_body)->setLacet(lacet+1);
+        static_cast<RVSphericalCamera*>(m_camera)->setTheta(theta-1.0*M_PI/180);
         break;
     case Qt::Key_Right:
-        camPos.setX(camPos.x() + deltaX);
+//        camPos.setX(camPos.x() + deltaX);
+        if(roulis > -roulisLimit)
+            static_cast<RVAirplane*>(m_body)->setRoulis(roulis-1);
+        static_cast<RVAirplane*>(m_body)->setLacet(lacet-1);
+        static_cast<RVSphericalCamera*>(m_camera)->setTheta(theta+1.0*M_PI/180);
         break;
     case Qt::Key_Up:
-        camPos.setY(camPos.y() + deltaY);
+//        camPos.setY(camPos.y() + deltaY);
+        static_cast<RVAirplane*>(m_body)->setTangage(tangage+1);
+        static_cast<RVSphericalCamera*>(m_camera)->setPhi(phi-1.0*M_PI/180);
         break;
     case Qt::Key_Down:
-        camPos.setY(camPos.y() - deltaY);
+//        camPos.setY(camPos.y() - deltaY);
+        static_cast<RVAirplane*>(m_body)->setTangage(tangage-1);
+        static_cast<RVSphericalCamera*>(m_camera)->setPhi(phi+1.0*M_PI/180);
+        break;
+    case Qt::Key_Z:
+        static_cast<RVAirplane*>(m_body)->accelere(1.0);
+        break;
+    case Qt::Key_S:
+        static_cast<RVAirplane*>(m_body)->decelere(1.0);
+        break;        
+    case Qt::Key_Q:
+        static_cast<RVAirplane*>(m_body)->setRoulis(roulis+1);
+        break;
+    case Qt::Key_D:
+        static_cast<RVAirplane*>(m_body)->setRoulis(roulis-1);
         break;
     }
     m_camera->setPosition(camPos);

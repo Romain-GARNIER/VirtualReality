@@ -42,6 +42,14 @@ public:
     QLabel *label;
     QDial *fov;
     QFrame *line;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_8;
+    QLabel *label_9;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
     QSpacerItem *verticalSpacer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -118,6 +126,46 @@ public:
 
         verticalLayout->addWidget(line);
 
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        verticalLayout->addWidget(label_2);
+
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        verticalLayout->addWidget(label_3);
+
+        label_8 = new QLabel(centralwidget);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        verticalLayout->addWidget(label_8);
+
+        label_9 = new QLabel(centralwidget);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        verticalLayout->addWidget(label_9);
+
+        label_4 = new QLabel(centralwidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        verticalLayout->addWidget(label_4);
+
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+
+        verticalLayout->addWidget(label_5);
+
+        label_6 = new QLabel(centralwidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        verticalLayout->addWidget(label_6);
+
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        verticalLayout->addWidget(label_7);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
@@ -156,6 +204,14 @@ public:
 #ifndef QT_NO_TOOLTIP
         fov->setToolTip(QApplication::translate("MainWindow", "Change la focale de la cam\303\251ra", nullptr));
 #endif // QT_NO_TOOLTIP
+        label_2->setText(QApplication::translate("MainWindow", "Z : Acc\303\251l\303\250re", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "S : D\303\251c\303\251l\303\251rer", nullptr));
+        label_8->setText(QApplication::translate("MainWindow", "D : Roulis droite", nullptr));
+        label_9->setText(QApplication::translate("MainWindow", "Q : Roulis gauche", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Haut : Tangage haut", nullptr));
+        label_5->setText(QApplication::translate("MainWindow", "Bas : Tangage haut", nullptr));
+        label_6->setText(QApplication::translate("MainWindow", "Gauche : Tourner \303\240 gauche", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Droite : Tourner \303\240 droite", nullptr));
     } // retranslateUi
 
 };

@@ -34,6 +34,7 @@
 #include "rvlight.h"
 #include "rvhelix.h"
 #include "rvmodel.h"
+#include "rvairplane.h"
 
 
 /*!

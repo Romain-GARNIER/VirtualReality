@@ -17,6 +17,7 @@
         <file>VS_lit_texture.vsh</file>
         <file>FS_lit_texture.fsh</file>
         <file>VS_lit_texture_cube.vsh</file>
+        <file>VS_heightmap.vsh</file>
     </qresource>
     <qresource prefix="/textures">
         <file>wood.png</file>
@@ -31,5 +32,6 @@
         <file>skybox/right.jpg</file>
         <file>skybox/top.jpg</file>
         <file>skybox/back.jpg</file>
+        <file>heigthmap.jpg</file>
     </qresource>
 </RCC>

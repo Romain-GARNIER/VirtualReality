@@ -35,6 +35,7 @@ SOURCES += \
     rvsphericalcamera.cpp \
     rvstereocamera.cpp \
     rvsurface.cpp \
+    rvterrain.cpp \
     rvtexcube.cpp \
     rvtorus.cpp \
     rvwidget.cpp
@@ -57,6 +58,7 @@ HEADERS += \
     rvsphericalcamera.h \
     rvstereocamera.h \
     rvsurface.h \
+    rvterrain.h \
     rvtexcube.h \
     rvtorus.h \
     rvwidget.h
