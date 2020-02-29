@@ -33,7 +33,7 @@ RVBody::RVBody()
     m_culling = true;
     m_scale = 1;
     m_globalColor = QColor(255, 255, 255);
-
+    m_origin = QVector3D(0,0,0);
     //shaders qui utilisent les textures
     m_VSFileName = ":/shaders/VS_lit_texture.vsh";
     m_FSFileName = ":/shaders/FS_lit_texture.fsh";
@@ -65,6 +65,7 @@ QMatrix4x4 RVBody::modelMatrix()
     model.translate(m_position);
     model.rotate(m_orientation);
     model.scale(m_scale);
+    model.translate(-m_origin);
     return model;
 }
 
@@ -250,6 +251,16 @@ float RVBody::specStrength() const
 void RVBody::setSpecStrength(float specStrength)
 {
     m_specStrength = specStrength;
+}
+
+void RVBody::setOrigin(QVector3D pos)
+{
+    m_origin = pos;
+}
+
+QVector3D RVBody::origin() const
+{
+    return m_origin;
 }
 
 void RVBody::setVS(const QString &VSFileName)

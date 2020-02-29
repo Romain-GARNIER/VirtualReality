@@ -23,6 +23,7 @@ RVWidget::RVWidget(QWidget *parent)
     m_time = QTime();
     m_time.start();
     m_nbOfPaint = 0;
+    m_subjectiveView = false;
 }
 
 RVWidget::~RVWidget()
@@ -50,7 +51,7 @@ void RVWidget::initializeGL()
     m_camera = new RVSphericalCamera();
     m_camera->setAspect(scale);
     m_camera->setIsOrthogonal(false);
-    m_camera->setTarget(QVector3D(0, 50, -100));
+//    m_camera->setTarget(QVector3D(0, 50, -100));
     m_camera->setZMin(2);
     m_camera->setZMax(500);
     static_cast<RVSphericalCamera*>(m_camera)->setRho(70);
@@ -69,9 +70,10 @@ void RVWidget::initializeGL()
     m_batiment->initialize();
 
     m_bb8 = new RVBB8();
-    m_bb8->setPosition(QVector3D(0, 0, -100));
+    m_bb8->setPosition(QVector3D(0, 20, -100));
     m_bb8->setLight(m_light);
     m_bb8->setScale(0.4f);
+    m_bb8->setOrigin(QVector3D(-10.5,50,0));
     m_bb8->initialize();
 
     m_sphere = new RVSphere(5.0);
@@ -85,6 +87,10 @@ void RVWidget::initializeGL()
     m_torus->setFS(":/shaders/FS_lit_damier.fsh");
     m_torus->setLight(m_light);
     m_torus->initialize();
+
+    m_camera->setTarget(m_bb8->position());
+    static_cast<RVSphericalCamera*>(m_camera)->setPhi(0.50);
+    static_cast<RVSphericalCamera*>(m_camera)->setRho(150);
 
     m_scene.append(m_batiment);
     m_scene.append(m_sphere);
@@ -137,8 +143,11 @@ void RVWidget::update()
 
     if (m_animation) {
         m_scene.update(float(t));
+    }    
+    if(!m_subjectiveView){
+        m_bb8->update(float(t*0.01));
+        m_camera->setTarget(m_bb8->position());
     }
-
     QOpenGLWidget::update();
 }
 
@@ -218,19 +227,48 @@ void RVWidget::keyPressEvent(QKeyEvent *event)
     QVector3D camPos = m_camera->position();
     float deltaX = 0.2f;
     float deltaY = 0.2f;
+    float oldTheta = static_cast<RVSphericalCamera*>(m_camera)->theta();
     switch (event->key())
     {
     case Qt::Key_Z:
-        m_camera2->move(10);
+        if(m_subjectiveView)
+            m_camera2->move(10);
+        else{
+            m_bb8->setVelocity(m_bb8->velocity()+0.001f);
+        }
         break;
     case Qt::Key_S:
-        m_camera2->move(-10);
+        if(m_subjectiveView)
+            m_camera2->move(-10);
+        else{
+            m_bb8->setVelocity(m_bb8->velocity()-0.001f);
+        }
         break;
     case Qt::Key_D:
-        m_camera2->lateral(10);
+        if(m_subjectiveView)
+            m_camera2->lateral(10);
+        else{
+            m_bb8->setLacet(m_bb8->lacet()-1);
+            static_cast<RVSphericalCamera*>(m_camera)->setTheta(oldTheta+qDegreesToRadians(1.0));
+        }
         break;
     case Qt::Key_Q:
-        m_camera2->lateral(-10);
+        if(m_subjectiveView)
+            m_camera2->lateral(-10);
+        else{
+            m_bb8->setLacet(m_bb8->lacet()+1);
+            static_cast<RVSphericalCamera*>(m_camera)->setTheta(oldTheta-qDegreesToRadians(1.0));
+        }
+        break;
+    case Qt::Key_C:
+        if(m_subjectiveView){
+            m_subjectiveView = false;
+            m_scene.setCamera(m_camera);
+        }
+        else{
+            m_subjectiveView = true;
+            m_scene.setCamera(m_camera2);
+        }
         break;
     }
     m_camera->setPosition(camPos);

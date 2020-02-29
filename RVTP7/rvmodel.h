@@ -43,6 +43,7 @@ public:
     void setOrientation(float yaw, float pitch, float roll) override;
     void setPosition(const QVector3D &position) override;
     void setScale(float scale) override;
+    void setOrigin(QVector3D pos) override;
 
 protected:
     QVector<RVMesh*> m_meshes;

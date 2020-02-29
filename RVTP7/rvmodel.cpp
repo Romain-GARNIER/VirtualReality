@@ -191,6 +191,15 @@ void RVModel::setScale(float scale)
     }
 }
 
+void RVModel::setOrigin(QVector3D pos)
+{
+    RVBody::setOrigin(pos);
+    foreach (RVMesh* mesh, m_meshes) {
+        mesh->setOrigin(pos);
+     }
+}
+
+
 
 
 

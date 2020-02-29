@@ -154,5 +154,6 @@ protected:
     RVCurve* m_trajectory;      //!<    Trajectoire à suivre
     int m_nbOfPaint;
     RVBB8* m_bb8;
+    bool m_subjectiveView;
 };
 #endif // RVWIDGET_H

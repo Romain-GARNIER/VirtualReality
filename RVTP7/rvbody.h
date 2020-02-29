@@ -260,6 +260,10 @@ public:  // accesseurs et mutateurs
     float specStrength() const;
     void setSpecStrength(float specStrength);
 
+    virtual void setOrigin(QVector3D pos);
+
+    QVector3D origin() const;
+
 protected:
     QString m_VSFileName;               //!< : nom du fichier qui contient le vertex shader
     QString m_FSFileName;               //!< : nom du fichier qui contient le fragment shader
@@ -287,6 +291,8 @@ protected:
     RVLight *m_light;
     float m_specStrength;
     float m_lastUpdateTime;
+    QVector3D m_origin;
+
 };
 
 #endif // RVBODY_H
